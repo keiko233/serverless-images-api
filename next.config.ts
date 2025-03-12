@@ -1,5 +1,6 @@
 import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
 import type { NextConfig } from "next";
+import unpluginIcons from "unplugin-icons/webpack";
 
 // Here we use the @cloudflare/next-on-pages next-dev module to allow us to
 // use bindings during local development (when running the application with
@@ -12,6 +13,17 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
     typedRoutes: true,
+  },
+
+  webpack(config) {
+    config.plugins.push(
+      unpluginIcons({
+        compiler: "jsx",
+        jsx: "react",
+      }),
+    );
+
+    return config;
   },
 };
 
