@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "serverless-images-api",
+  "compatibility_date": "2025-03-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages_build_output_dir": ".vercel/output/static",
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "serverless-images-api",
+      "database_id": "1cca4364-0068-40da-8bd4-f6a7ea0f2b64"
+    }
+  ]
+}
