@@ -79,6 +79,16 @@ export const VerificationSchema = z.object({
 
 export type Verification = z.infer<typeof VerificationSchema>;
 
+export const SettingSchema = z.object({
+  id: z.string(),
+  key: z.string(),
+  value: z.string(),
+  createdAt: z.number(),
+  updatedAt: z.number(),
+});
+
+export type Setting = z.infer<typeof SettingSchema>;
+
 // not need zod schema
 export interface Database {
   Image: Image;
@@ -86,4 +96,5 @@ export interface Database {
   Session: Session;
   Account: Account;
   Verification: Verification;
+  Setting: Setting;
 }

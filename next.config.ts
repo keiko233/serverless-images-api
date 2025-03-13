@@ -25,6 +25,15 @@ const nextConfig: NextConfig = {
 
     return config;
   },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.sharepoint.com',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

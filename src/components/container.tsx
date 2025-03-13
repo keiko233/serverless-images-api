@@ -31,7 +31,9 @@ export const Container = ({
         {rightContent}
       </div>
 
-      <div className="h-dvh-subtract-16 overflow-x-hidden">{children}</div>
+      <div className="h-dvh-subtract-16 relative overflow-x-hidden">
+        {children}
+      </div>
     </div>
   );
 };
