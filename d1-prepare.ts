@@ -4,7 +4,7 @@ function applyD1Migrations(dbName: string = "serverless-images-api"): void {
   console.log(`Applying migrations to D1 database: ${dbName}...`);
 
   try {
-    execSync(`echo "Y" | pnpm wrangler d1 migrations apply ${dbName}`, {
+    execSync(`echo "Y" | pnpm wrangler d1 migrations apply ${dbName} --local`, {
       stdio: "inherit",
     });
     console.log("Migrations applied successfully.");
