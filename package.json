@@ -24,14 +24,18 @@
 		"ahooks": "^3.8.4",
 		"better-auth": "^1.2.3",
 		"next": "15.1.6",
+		"pretty-bytes": "^6.1.1",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
+		"sonner": "^2.0.1",
 		"usehooks-ts": "^3.1.1",
-		"zod": "^3.24.2"
+		"zod": "^3.24.2",
+		"zsa": "^0.6.0",
+		"zsa-react": "^0.2.3"
 	},
 	"devDependencies": {
 		"@cloudflare/next-on-pages": "^1.13.10",
-		"@cloudflare/workers-types": "^4.20250311.0",
+		"@cloudflare/workers-types": "^4.20250312.0",
 		"@commitlint/cli": "^19.8.0",
 		"@commitlint/config-conventional": "^19.8.0",
 		"@eslint/eslintrc": "^3.3.0",

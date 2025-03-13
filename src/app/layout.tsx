@@ -3,6 +3,7 @@ import { Noto_Sans, Noto_Sans_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@libnyanpasu/material-design-libs";
 import { MDProvider } from "@libnyanpasu/material-design-react";
+import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const notoSans = Noto_Sans({
@@ -35,7 +36,19 @@ export default function RootLayout({
         )}
       >
         <MDProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <Toaster
+              position="top-center"
+              closeButton
+              toastOptions={{
+                classNames: {
+                  toast: "border bg-surface dark:bg-on-surface rounded-2xl",
+                },
+              }}
+            />
+
+            {children}
+          </ThemeProvider>
         </MDProvider>
       </body>
     </html>
