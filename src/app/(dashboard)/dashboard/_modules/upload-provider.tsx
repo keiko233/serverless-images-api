@@ -5,6 +5,7 @@ import { useLockFn } from "ahooks";
 import { AnimatePresence, motion } from "framer-motion";
 import prettyBytes from "pretty-bytes";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 import { uploadImage } from "@/actions/service/upload-image";
 import { formatError } from "@/utils/fmt";
@@ -29,7 +30,7 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
 
   const [message, setMessage] = useState<string>();
 
-  const handleUpload = useLockFn(async (filelist: FileList) => {
+  const handleUpload = useLockFn(async (filelist: FileList | File[]) => {
     try {
       setIsPending(true);
 
@@ -61,6 +62,19 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
     }
   });
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (acceptedFiles: File[]) => {
+      handleUpload(acceptedFiles);
+    },
+    accept: {
+      "image/*": [".png", ".jpg", ".jpeg", ".webp"],
+    },
+    onDropRejected: () => {
+      toast.error("Only image files are allowed");
+    },
+    noClick: true,
+  });
+
   return (
     <UploadContext.Provider
       value={{
@@ -68,32 +82,37 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
         handleUpload,
       }}
     >
-      <AnimatePresence initial={false}>
-        {isPending && (
-          <motion.div
-            className={cn(
-              "fixed inset-0 z-50",
-              "backdrop-blur-xl backdrop-brightness-75",
-              "grid place-content-center",
-            )}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="flex flex-col items-center gap-2">
-              <span>Uploading...</span>
+      <div {...getRootProps()}>
+        <input {...getInputProps()} className="pointer-events-none hidden" />
 
-              {message && (
-                <span className="text-zinc-700 dark:text-zinc-300">
-                  {message}
-                </span>
+        <AnimatePresence initial={false}>
+          {(isDragActive || isPending) && (
+            <motion.div
+              className={cn(
+                "fixed inset-0 z-50",
+                "backdrop-blur-xl backdrop-brightness-75",
+                "grid place-content-center",
               )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="flex flex-col items-center gap-2">
+                {isDragActive && <span>Drop to Upload File</span>}
+                {isPending && <span>Uploading...</span>}
 
-      {children}
+                {message && (
+                  <span className="text-zinc-700 dark:text-zinc-300">
+                    {message}
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {children}
+      </div>
     </UploadContext.Provider>
   );
 };
