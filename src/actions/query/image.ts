@@ -76,6 +76,34 @@ export const createImage = async (params: CreateImageParams) => {
   return image;
 };
 
+export const upsertImage = async (params: CreateImageParams) => {
+  const kysely = await getKysely();
+
+  const now = new Date().getTime();
+  
+  // If there's no ID provided, create a new one
+  const id = params.id || crypto.randomUUID();
+  
+  const image = await kysely
+    .insertInto("Image")
+    .values({
+      id,
+      ...params,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .onConflict((oc) => 
+      oc.column("id").doUpdateSet({
+        ...params,
+        updatedAt: now,
+      })
+    )
+    .returning("id")
+    .executeTakeFirstOrThrow();
+
+  return image;
+};
+
 export const deleteImageById = async (id: string) => {
   const kysely = await getKysely();
 

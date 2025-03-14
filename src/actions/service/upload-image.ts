@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createServerAction } from "zsa";
-import { createImage } from "../query/image";
+import { upsertImage } from "../query/image";
 import { uploadFile } from "./onedrive";
 import { ImageUploadSchema } from "./schema";
 
@@ -13,7 +13,7 @@ export const uploadImage = createServerAction()
 
     const [, format] = name.split(".");
 
-    const { id } = await createImage({
+    const { id } = await upsertImage({
       filename: name,
       size,
     });
