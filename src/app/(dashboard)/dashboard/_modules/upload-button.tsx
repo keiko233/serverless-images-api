@@ -4,42 +4,30 @@ import { cn } from "@libnyanpasu/material-design-libs";
 import { Button } from "@libnyanpasu/material-design-react";
 import MaterialSymbolsAdd2Rounded from "~icons/material-symbols/add-2-rounded";
 import { useLockFn } from "ahooks";
-import { uploadImage } from "@/actions/service/upload-image";
 import { selectFile } from "@/utils/select";
+import { useUploadContext } from "./upload-provider";
 
 export const UploadButton = () => {
+  const { handleUpload } = useUploadContext();
+
   const handleClick = useLockFn(async () => {
     const result = await selectFile({
       accept: ".jpg,.jpeg,.png,.webp",
+      multiple: true,
     });
 
     if (!result) {
       return;
     }
 
-    for (const file of result) {
-      const { name, size, type } = file;
-      const arrayBuffer = await file.arrayBuffer();
-
-      const [, error] = await uploadImage({
-        name,
-        size,
-        type,
-        arrayBuffer: arrayBuffer,
-      });
-
-      if (error) {
-        console.error("Failed to upload", error);
-        return;
-      }
-    }
+    await handleUpload(result);
   });
 
   return (
     <Button
       variant="fab"
       className={cn(
-        "fixed right-6 bottom-6",
+        "fixed right-6 bottom-6 z-10",
         "flex items-center justify-center gap-2",
       )}
       onClick={handleClick}
