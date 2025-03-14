@@ -5,16 +5,20 @@ import { DrakMode } from "./dark-mode";
 export const Container = ({
   children,
   title,
+  leftContent,
   centerContent,
   rightContent,
 }: PropsWithChildren & {
   title: string;
+  leftContent?: ReactNode;
   centerContent?: ReactNode;
   rightContent?: ReactNode;
 }) => {
   return (
     <div className="dark:text-surface h-dvh overflow-x-hidden">
       <div className="bg-primary-container dark:bg-on-secondary-container flex h-16 items-center gap-2 px-4">
+        {leftContent}
+
         <h1
           className={cn(
             "text-primary text-2xl font-extrabold",

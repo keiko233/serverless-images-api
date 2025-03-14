@@ -1,6 +1,10 @@
 import { Container } from "@/components/container";
 import { getSession } from "@/lib/auth";
 import { UserRole } from "@/schema";
+import { ContainerWithSize } from "./_modules/container-with-size";
+import { NavbarAside } from "./_modules/navbar-aside";
+import { NavbarMenu } from "./_modules/navbar-menu";
+import { NavbarProvider } from "./_modules/navbar-provider";
 
 export const runtime = "edge";
 
@@ -24,8 +28,12 @@ export default async function Layout({
   }
 
   return (
-    <Container title="Dashboard">
-      <div className="mx-auto max-w-7xl p-4">{children}</div>
-    </Container>
+    <NavbarProvider>
+      <Container title="Dashboard" leftContent={<NavbarMenu />}>
+        <NavbarAside />
+
+        <ContainerWithSize>{children}</ContainerWithSize>
+      </Container>
+    </NavbarProvider>
   );
 }
