@@ -48,7 +48,7 @@ export default async function Page({
 
         <UploadButton />
 
-        <Pagination pagination={pagination} />
+        <Pagination className="py-4" pagination={pagination} />
       </div>
     </UploadProvider>
   );
