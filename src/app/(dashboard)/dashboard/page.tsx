@@ -1,5 +1,6 @@
 import { cn } from "@libnyanpasu/material-design-libs";
 import { getImages } from "@/actions/query/image";
+import { Pagination } from "@/components/pagination";
 import { ImageCard } from "./_modules/image-card";
 import { UploadButton } from "./_modules/upload-button";
 import { UploadProvider } from "./_modules/upload-provider";
@@ -20,7 +21,7 @@ export default async function Page({
 }) {
   const { page, limit } = await searchParams;
 
-  const { images } = await getImages({
+  const { images, pagination } = await getImages({
     page: page ? parseInt(page) : undefined,
     limit: limit ? parseInt(limit) : undefined,
   });
@@ -46,6 +47,8 @@ export default async function Page({
         </div>
 
         <UploadButton />
+
+        <Pagination pagination={pagination} />
       </div>
     </UploadProvider>
   );
