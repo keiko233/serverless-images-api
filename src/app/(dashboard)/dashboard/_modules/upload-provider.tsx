@@ -58,6 +58,7 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
     } catch (e) {
       toast.error(`Failed to upload: ${formatError(e)}`);
     } finally {
+      setMessage(undefined);
       setIsPending(false);
     }
   });
