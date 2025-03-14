@@ -8,15 +8,21 @@ import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
 import { CreateImageParams, UpdateImageTagsByIdSchema } from "./schema";
 
-export const getImage = async () => {
+export const getImage = async (options?: { character?: string }) => {
   const kysely = await getKysely();
 
-  const image = await kysely
+  let query = kysely
     .selectFrom("Image")
     .selectAll()
     .orderBy(sql`RANDOM()`)
-    .limit(1)
-    .executeTakeFirst();
+    .limit(1);
+
+  // Add character filter if provided
+  if (options?.character) {
+    query = query.where("character", "=", options.character);
+  }
+
+  const image = await query.executeTakeFirst();
 
   if (!image) {
     return null;
@@ -142,4 +148,19 @@ export const getImageById = async (id: string) => {
     .selectAll()
     .where("id", "=", id)
     .executeTakeFirst();
+};
+
+export const getImageAllCharacter = async () => {
+  const kysely = await getKysely();
+
+  const results = await kysely
+    .selectFrom("Image")
+    .select("character")
+    .where("character", "is not", null)
+    .distinct()
+    .execute();
+
+  return results
+    .map((row) => row.character)
+    .filter((character): character is string => character !== null);
 };

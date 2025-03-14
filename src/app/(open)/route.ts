@@ -15,6 +15,7 @@ enum Method {
 
 const SearchParamsSchema = z.object({
   method: z.nativeEnum(Method).nullable(),
+  character: z.string().nullable(),
 });
 
 const getImageProxyUrl = (request: NextRequest, query: Image) => {
@@ -30,11 +31,14 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   try {
-    const { method } = SearchParamsSchema.parse({
+    const { method, character } = SearchParamsSchema.parse({
       method: searchParams.get("method") || searchParams.get("m"),
+      character: searchParams.get("character") || searchParams.get("p"),
     });
 
-    const query = await getImage();
+    const query = await getImage({
+      character: character ?? undefined,
+    });
 
     if (!query) {
       throw new Error("No image found");
