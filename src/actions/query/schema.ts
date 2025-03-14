@@ -20,3 +20,14 @@ export const CreateImageSchema = ImageSchema.extend({
 });
 
 export type CreateImageParams = z.infer<typeof CreateImageSchema>;
+
+export const UpdateImageTagsByIdSchema = ImageSchema.pick({
+  id: true,
+  tags: true,
+  character: true,
+  aliases: true,
+});
+
+export type UpdateImageTagsByIdParams = z.infer<
+  typeof UpdateImageTagsByIdSchema
+>;

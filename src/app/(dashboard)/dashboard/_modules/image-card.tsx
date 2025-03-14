@@ -1,15 +1,14 @@
 import {
-  Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@libnyanpasu/material-design-react";
-import { revalidatePath } from "next/cache";
 import prettyBytes from "pretty-bytes";
-import { deleteImageById } from "@/actions/query/image";
 import { Image } from "@/schema";
 import { ImageCardContent } from "./image-card-content";
+import { ImageDeleteButton } from "./image-delete-button";
+import { ImageDetailsDialog } from "./image-details-dialog";
 
 export const ImageCard = async ({ image }: { image: Image }) => {
   const mapping = {
@@ -19,14 +18,6 @@ export const ImageCard = async ({ image }: { image: Image }) => {
     Size: prettyBytes(image.size),
     "Created At": new Date(image.createdAt).toLocaleString(),
     "Updated At": new Date(image.updatedAt).toLocaleString(),
-  };
-
-  const handleDelete = async () => {
-    "use server";
-
-    await deleteImageById(image.id);
-
-    revalidatePath("/");
   };
 
   return (
@@ -45,10 +36,10 @@ export const ImageCard = async ({ image }: { image: Image }) => {
         ))}
       </CardContent>
 
-      <CardFooter>
-        <Button variant="flat" onClick={handleDelete}>
-          Delete
-        </Button>
+      <CardFooter className="gap-1">
+        <ImageDeleteButton image={image} />
+
+        <ImageDetailsDialog image={image} />
       </CardFooter>
     </Card>
   );

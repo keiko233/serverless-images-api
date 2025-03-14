@@ -1,9 +1,12 @@
 "use server";
 
 import { sql } from "kysely";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { createServerAction } from "zsa";
 import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
-import { CreateImageParams } from "./schema";
+import { CreateImageParams, UpdateImageTagsByIdSchema } from "./schema";
 
 export const getImage = async () => {
   const kysely = await getKysely();
@@ -80,10 +83,10 @@ export const upsertImage = async (params: CreateImageParams) => {
   const kysely = await getKysely();
 
   const now = new Date().getTime();
-  
+
   // If there's no ID provided, create a new one
   const id = params.id || crypto.randomUUID();
-  
+
   const image = await kysely
     .insertInto("Image")
     .values({
@@ -92,11 +95,11 @@ export const upsertImage = async (params: CreateImageParams) => {
       createdAt: now,
       updatedAt: now,
     })
-    .onConflict((oc) => 
+    .onConflict((oc) =>
       oc.column("id").doUpdateSet({
         ...params,
         updatedAt: now,
-      })
+      }),
     )
     .returning("id")
     .executeTakeFirstOrThrow();
@@ -104,11 +107,32 @@ export const upsertImage = async (params: CreateImageParams) => {
   return image;
 };
 
-export const deleteImageById = async (id: string) => {
-  const kysely = await getKysely();
+export const updateImageTagsById = createServerAction()
+  .input(UpdateImageTagsByIdSchema)
+  .handler(async ({ input }) => {
+    const kysely = await getKysely();
 
-  await kysely.deleteFrom("Image").where("id", "=", id).execute();
-};
+    const now = new Date().getTime();
+
+    await kysely
+      .updateTable("Image")
+      .set({
+        ...input,
+        updatedAt: now,
+      })
+      .where("id", "=", input.id)
+      .execute();
+  });
+
+export const deleteImageById = createServerAction()
+  .input(z.string().nonempty())
+  .handler(async ({ input }) => {
+    const kysely = await getKysely();
+
+    await kysely.deleteFrom("Image").where("id", "=", input).execute();
+
+    revalidatePath("/");
+  });
 
 export const getImageById = async (id: string) => {
   const kysely = await getKysely();
