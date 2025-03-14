@@ -44,6 +44,7 @@ const UpdateTagButton = ({ image }: { image: Image }) => {
     const [, error] = await execute(image);
 
     if (error) {
+      console.log(error);
       toast.error(error.message);
     }
   });

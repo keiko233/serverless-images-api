@@ -78,9 +78,8 @@ export class DeepDanbooru {
     return this.danbooruTag;
   }
 
+  // https://danbooru.donmai.us/tags.json?search[name]=
   private async _DanbooruTagSearch(name: string) {
-    // https://danbooru.donmai.us/tags.json?search[name]=
-
     this.message(`searching tag ${name} on danbooru.`);
 
     let result: DanbooruTagSearchItem[] | null;
@@ -111,7 +110,12 @@ export class DeepDanbooru {
     }
   }
 
-  public async getTag() {
+  public async getTag(options?: { maxTagSearchDepth?: number }) {
+    // Use percentage instead of absolute count, default to 40% of all tags
+    const maxTagPercentage = options?.maxTagSearchDepth ?? 0.4;
+    // Maximum absolute number of tags to process
+    const maxAbsoluteTags = 30;
+
     await this._DeepDanbooruNSH(this.image);
 
     if (!this.danbooruTag) {
@@ -120,13 +124,27 @@ export class DeepDanbooru {
 
     const tags: DetailDeepDanbooruTag[] = this.danbooruTag;
 
+    // Sort tags by score from high to low before querying
+    const sortedTags = [...tags].sort((a, b) => b.score - a.score);
+
+    // Calculate max tags to process as percentage of total
+    const maxTagsToProcess = Math.min(
+      maxAbsoluteTags,
+      Math.max(1, Math.floor(sortedTags.length * maxTagPercentage)),
+    );
+
     // danbooru api has limited, dont use concurrent queries
-    for (const tag of tags) {
+    // cloudflare workers have request limit
+    // refrence: https://developers.cloudflare.com/workers/platform/limits/#subrequests
+    for (let i = 0; i < Math.min(maxTagsToProcess, sortedTags.length); i++) {
+      const tag = sortedTags[i];
       tag.detail = await this._DanbooruTagSearch(tag.tag);
 
       // category 4 is character
       if (tag.detail?.category == 4) {
         this.character = tag.detail;
+        // Stop processing more tags once we find a character
+        break;
       }
     }
 
