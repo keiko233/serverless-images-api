@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ImageSchema } from "@/schema";
+import { ImageSchema, OrderByKeys } from "@/schema";
 
 export const UpsertOnedrivePathSettingSchema = z.object({
   path: z.string().nonempty(),
@@ -32,10 +32,22 @@ export type UpdateImageTagsByIdParams = z.infer<
   typeof UpdateImageTagsByIdSchema
 >;
 
+export type GetImagesUserOrderByKeys = OrderByKeys<"Image">;
+
+export const getImagesUserOrderByFields = [
+  "createdAt",
+  "updatedAt",
+  "tags",
+  "character",
+  "aliases",
+] as const;
+
 export const GetImagesSchema = z.object({
   page: z.number().int().optional(),
   limit: z.number().int().optional(),
   character: z.string().optional(),
+  orderBy: z.enum(getImagesUserOrderByFields).optional(),
+  direction: z.enum(["asc", "desc"]).optional(),
 });
 
 export type GetImagesParams = z.infer<typeof GetImagesSchema>;

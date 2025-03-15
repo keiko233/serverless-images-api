@@ -42,10 +42,7 @@ export const getImages = async (options?: GetImagesParams) => {
   const offset = (page - 1) * limit;
 
   // Build base queries
-  let imagesQuery = kysely
-    .selectFrom("Image")
-    .selectAll()
-    .orderBy("updatedAt", "desc");
+  let imagesQuery = kysely.selectFrom("Image").selectAll();
 
   let countQuery = kysely
     .selectFrom("Image")
@@ -55,6 +52,10 @@ export const getImages = async (options?: GetImagesParams) => {
   if (options?.character) {
     imagesQuery = imagesQuery.where("character", "=", options.character);
     countQuery = countQuery.where("character", "=", options.character);
+  }
+
+  if (options?.orderBy) {
+    imagesQuery = imagesQuery.orderBy(options.orderBy, options.direction);
   }
 
   const [images, totalCountResult] = await Promise.all([

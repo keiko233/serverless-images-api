@@ -11,23 +11,21 @@ export const runtime = "edge";
 
 export const dynamic = "force-dynamic";
 
-type PageSearchParams = Promise<{
-  page?: string;
-  limit?: string;
-  character?: string;
-}>;
+type PageSearchParams = Promise<GetImagesParams>;
 
 export default async function Page({
   searchParams,
 }: {
   searchParams: PageSearchParams;
 }) {
-  const { page, limit, character } = await searchParams;
+  const { page, limit, character, orderBy, direction } = await searchParams;
 
   const params: GetImagesParams = {
-    page: page ? parseInt(page) : undefined,
-    limit: limit ? parseInt(limit) : undefined,
-    character: character,
+    page: page ? parseInt(String(page)) : undefined,
+    limit: limit ? parseInt(String(limit)) : undefined,
+    character,
+    orderBy,
+    direction,
   };
 
   const { images, pagination } = await getImages(params);

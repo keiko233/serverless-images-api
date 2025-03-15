@@ -98,3 +98,6 @@ export interface Database {
   Verification: Verification;
   Setting: Setting;
 }
+
+export type OrderByKeys<TableName extends keyof Database> =
+  keyof Database[TableName];

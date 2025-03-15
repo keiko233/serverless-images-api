@@ -12,7 +12,10 @@ import {
 } from "@libnyanpasu/material-design-react";
 import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded";
 import Link from "next/link";
-import { GetImagesParams } from "@/actions/query/schema";
+import {
+  GetImagesParams,
+  getImagesUserOrderByFields,
+} from "@/actions/query/schema";
 import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
 
 const LIMIT_LENGTH = 5;
@@ -89,7 +92,7 @@ const Characters = ({
             href={{
               query: {
                 ...defaultValues,
-                character: undefined,
+                character: null,
               },
             }}
           >
@@ -123,6 +126,122 @@ const Characters = ({
   );
 };
 
+const QueryOrder = ({ defaultValues }: { defaultValues?: GetImagesParams }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="flat">
+          {defaultValues?.orderBy
+            ? `Order By: ${defaultValues.orderBy}`
+            : "Query Order"}
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuLabel className="pr-2">Query Order</DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        {defaultValues?.orderBy && (
+          <Link
+            href={{
+              query: {
+                ...defaultValues,
+                orderBy: null,
+              },
+            }}
+          >
+            <DropdownMenuItem>
+              <span>Reset Default</span>
+
+              <MaterialSymbolsCloseRounded className="size-6" />
+            </DropdownMenuItem>
+          </Link>
+        )}
+
+        {getImagesUserOrderByFields.map((orderBy) => (
+          <Link
+            key={orderBy}
+            href={{
+              query: {
+                ...defaultValues,
+                orderBy,
+              },
+            }}
+          >
+            <DropdownMenuCheckboxItem
+              checked={defaultValues?.orderBy === orderBy}
+              className="capitalize"
+            >
+              {orderBy}
+            </DropdownMenuCheckboxItem>
+          </Link>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+const QueryDirection = ({
+  defaultValues,
+}: {
+  defaultValues?: GetImagesParams;
+}) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="flat">
+          {defaultValues?.direction
+            ? `Direction: ${defaultValues.direction}`
+            : "Query Direction"}
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuLabel className="pr-2">Query Direction</DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        {defaultValues?.direction && (
+          <Link
+            href={{
+              query: {
+                ...defaultValues,
+                direction: null,
+              },
+            }}
+          >
+            <DropdownMenuItem>
+              <span>Reset Default</span>
+
+              <MaterialSymbolsCloseRounded className="size-6" />
+            </DropdownMenuItem>
+          </Link>
+        )}
+
+        {["asc", "desc"].map((direction) => (
+          <Link
+            key={direction}
+            href={{
+              query: {
+                ...defaultValues,
+                direction,
+              },
+            }}
+          >
+            <DropdownMenuCheckboxItem
+              checked={defaultValues?.direction === direction}
+              className="capitalize"
+            >
+              {direction}
+            </DropdownMenuCheckboxItem>
+          </Link>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 export const QueryForm = ({
   defaultValues,
   characters,
@@ -131,7 +250,13 @@ export const QueryForm = ({
   characters: string[] | null;
 }) => {
   return (
-    <div className="flex justify-end gap-4">
+    <div className="flex flex-wrap gap-4">
+      <QueryOrder defaultValues={defaultValues} />
+
+      <QueryDirection defaultValues={defaultValues} />
+
+      <div className="flex-1" />
+
       <Characters defaultValues={defaultValues} characters={characters} />
 
       <PageLimit defaultValues={defaultValues} />
