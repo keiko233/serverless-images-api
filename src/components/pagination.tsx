@@ -13,22 +13,31 @@ export type PaginationProps = {
 export const Pagination = ({
   className,
   pagination,
+  searchParams,
   ...props
 }: ComponentProps<"div"> & {
   pagination: PaginationProps;
+  searchParams?: Record<string, string | number | boolean | undefined>;
 }) => {
+  // Helper function to create pagination link query params
+  const createPaginationLink = (targetPage: number) => {
+    return {
+      query: {
+        ...searchParams,
+        page: targetPage,
+      },
+    };
+  };
+
+  const prevPage = Math.max(1, pagination.page - 1);
+  const nextPage = Math.min(pagination.totalPages, pagination.page + 1);
+
   return (
     <div
       className={cn("flex items-center justify-center gap-4", className)}
       {...props}
     >
-      <Link
-        href={{
-          query: {
-            page: pagination.page > 1 ? pagination.page - 1 : 1,
-          },
-        }}
-      >
+      <Link href={createPaginationLink(prevPage)}>
         <Button variant="flat">Previous Page</Button>
       </Link>
 
@@ -36,16 +45,7 @@ export const Pagination = ({
         Page: {pagination.page} / {pagination.totalPages}
       </p>
 
-      <Link
-        href={{
-          query: {
-            page:
-              pagination.page < pagination.totalPages
-                ? pagination.page + 1
-                : pagination.totalPages,
-          },
-        }}
-      >
+      <Link href={createPaginationLink(nextPage)}>
         <Button variant="flat">Next Page</Button>
       </Link>
     </div>
