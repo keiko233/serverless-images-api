@@ -31,3 +31,11 @@ export const UpdateImageTagsByIdSchema = ImageSchema.pick({
 export type UpdateImageTagsByIdParams = z.infer<
   typeof UpdateImageTagsByIdSchema
 >;
+
+export const GetImagesSchema = z.object({
+  page: z.number().int().optional(),
+  limit: z.number().int().optional(),
+  character: z.string().optional(),
+});
+
+export type GetImagesParams = z.infer<typeof GetImagesSchema>;

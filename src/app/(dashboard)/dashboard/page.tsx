@@ -1,7 +1,9 @@
 import { cn } from "@libnyanpasu/material-design-libs";
-import { getImages } from "@/actions/query/image";
+import { getImageAllCharacter, getImages } from "@/actions/query/image";
+import { GetImagesParams } from "@/actions/query/schema";
 import { Pagination } from "@/components/pagination";
 import { ImageCard } from "./_modules/image-card";
+import { QueryForm } from "./_modules/query-form";
 import { UploadButton } from "./_modules/upload-button";
 import { UploadProvider } from "./_modules/upload-provider";
 
@@ -12,6 +14,7 @@ export const dynamic = "force-dynamic";
 type PageSearchParams = Promise<{
   page?: string;
   limit?: string;
+  character?: string;
 }>;
 
 export default async function Page({
@@ -19,19 +22,22 @@ export default async function Page({
 }: {
   searchParams: PageSearchParams;
 }) {
-  const { page, limit } = await searchParams;
+  const { page, limit, character } = await searchParams;
 
-  const { images, pagination } = await getImages({
+  const params: GetImagesParams = {
     page: page ? parseInt(page) : undefined,
     limit: limit ? parseInt(limit) : undefined,
-  });
+    character: character,
+  };
+
+  const { images, pagination } = await getImages(params);
+
+  const [characters] = await getImageAllCharacter();
 
   return (
     <UploadProvider>
       <div className="flex flex-col gap-4">
-        {/* <div className="flex justify-end gap-4">
-          <Button variant="flat">Upload</Button>
-        </div> */}
+        <QueryForm defaultValues={params} characters={characters} />
 
         <div
           className={cn(
@@ -48,7 +54,11 @@ export default async function Page({
 
         <UploadButton />
 
-        <Pagination className="py-4" pagination={pagination} />
+        <Pagination
+          className="py-4"
+          pagination={pagination}
+          searchParams={params}
+        />
       </div>
     </UploadProvider>
   );

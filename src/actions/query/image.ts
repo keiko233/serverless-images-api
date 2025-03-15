@@ -6,7 +6,11 @@ import { z } from "zod";
 import { createServerAction } from "zsa";
 import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
-import { CreateImageParams, UpdateImageTagsByIdSchema } from "./schema";
+import {
+  CreateImageParams,
+  GetImagesParams,
+  UpdateImageTagsByIdSchema,
+} from "./schema";
 
 export const getImage = async (options?: { character?: string }) => {
   const kysely = await getKysely();
@@ -31,24 +35,27 @@ export const getImage = async (options?: { character?: string }) => {
   return image;
 };
 
-export const getImages = async (options?: {
-  page?: number;
-  limit?: number;
-}) => {
+export const getImages = async (options?: GetImagesParams) => {
   const kysely = await getKysely();
   const page = Number(options?.page) || 1;
   const limit = Number(options?.limit) || DEFAULT_CARD_PAGE_SIZE;
   const offset = (page - 1) * limit;
 
   // Build base queries
-  const imagesQuery = kysely
+  let imagesQuery = kysely
     .selectFrom("Image")
     .selectAll()
     .orderBy("updatedAt", "desc");
 
-  const countQuery = kysely
+  let countQuery = kysely
     .selectFrom("Image")
     .select(({ fn }) => [fn.count("id").as("total")]);
+
+  // Add character filter if provided
+  if (options?.character) {
+    imagesQuery = imagesQuery.where("character", "=", options.character);
+    countQuery = countQuery.where("character", "=", options.character);
+  }
 
   const [images, totalCountResult] = await Promise.all([
     imagesQuery.limit(limit).offset(offset).execute(),
@@ -150,7 +157,7 @@ export const getImageById = async (id: string) => {
     .executeTakeFirst();
 };
 
-export const getImageAllCharacter = async () => {
+export const getImageAllCharacter = createServerAction().handler(async () => {
   const kysely = await getKysely();
 
   const results = await kysely
@@ -163,4 +170,4 @@ export const getImageAllCharacter = async () => {
   return results
     .map((row) => row.character)
     .filter((character): character is string => character !== null);
-};
+});
