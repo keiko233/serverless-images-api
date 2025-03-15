@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useUpdateEffect } from "ahooks";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from "react";
+import { useIsMobile } from "@/hooks/use-is-moblie";
 
 const NavbarContext = createContext<{
   isCollapsed: boolean;
@@ -23,6 +30,14 @@ export const NavbarProvider = ({ children }: PropsWithChildren) => {
   const toggleCollapsed = () => {
     setIsCollapsed((prev) => !prev);
   };
+
+  const isMobile = useIsMobile();
+
+  useUpdateEffect(() => {
+    if (isMobile) {
+      setIsCollapsed(true);
+    }
+  }, [isMobile]);
 
   return (
     <NavbarContext.Provider
