@@ -2,9 +2,9 @@ import { cn } from "@libnyanpasu/material-design-libs";
 import { getImageAllCharacter, getImages } from "@/actions/query/image";
 import { GetImagesParams } from "@/actions/query/schema";
 import { Pagination } from "@/components/pagination";
+import { FloatButtons } from "./_modules/float-buttons";
 import { ImageCard } from "./_modules/image-card";
 import { QueryForm } from "./_modules/query-form";
-import { UploadButton } from "./_modules/upload-button";
 import { UploadProvider } from "./_modules/upload-provider";
 
 export const runtime = "edge";
@@ -50,7 +50,7 @@ export default async function Page({
           ))}
         </div>
 
-        <UploadButton />
+        <FloatButtons images={images} />
 
         <Pagination
           className="py-4"

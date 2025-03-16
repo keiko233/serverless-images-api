@@ -26,7 +26,7 @@ export const ImageCard = async ({ image }: { image: Image }) => {
         {image.filename}
       </CardHeader>
 
-      <ImageCardContent image={image} />
+      <ImageCardContent className="h-80" image={image} />
 
       <CardContent className="gap-0.5 text-sm">
         {Object.entries(mapping).map(([key, value]) => (
