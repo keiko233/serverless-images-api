@@ -19,7 +19,7 @@ import { deleteImageById } from "@/actions/query/image";
 import { Image } from "@/schema";
 
 export const ImageDeleteButton = ({ image }: { image: Image }) => {
-  const { isPending, execute } = useServerAction(deleteImageById);
+  const { execute } = useServerAction(deleteImageById);
 
   const handleDelete = useLockFn(async () => {
     await execute(image.id);
@@ -44,7 +44,7 @@ export const ImageDeleteButton = ({ image }: { image: Image }) => {
           </CardContent>
 
           <CardFooter className="gap-1">
-            <Button variant="flat" loading={isPending} onClick={handleDelete}>
+            <Button variant="flat" onClick={handleDelete}>
               Yes
             </Button>
 
