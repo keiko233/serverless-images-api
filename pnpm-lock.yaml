@@ -12,14 +12,14 @@ importers:
         specifier: ^1.2.15
         version: 1.2.16
       '@libnyanpasu/material-design-libs':
-        specifier: ^0.2.0
+        specifier: ^0.2.1
         version: 0.2.1(@material/material-color-utilities@0.3.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(lodash-es@4.17.21)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-react':
-        specifier: ^0.2.0
+        specifier: ^0.2.1
         version: 0.2.1(@material/material-color-utilities@0.3.0)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(lodash-es@4.17.21)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-tailwind':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.2.1
+        version: 0.2.1
       '@svgr/core':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.8.2)
@@ -953,8 +953,8 @@ packages:
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@libnyanpasu/material-design-tailwind@0.2.0':
-    resolution: {integrity: sha512-b/nMM7a4Yttnb+hxH/W/MqXw4O98ESwP0vZZyzNATm3NKCgFRL5jwB41spak7nVpVL8dM/u+b3mhZat55xA1Mg==}
+  '@libnyanpasu/material-design-tailwind@0.2.1':
+    resolution: {integrity: sha512-0EvMl+lfhbOYAF0ynqxlVz9Gzf0YOpEifO54HEJCjTJpRtFTnQDEyMo62+vSTOOrjEmbDnjQsGm9No/e5pKSjw==}
 
   '@mapbox/node-pre-gyp@2.0.0':
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
@@ -5227,7 +5227,7 @@ snapshots:
       - lodash-es
       - tailwind-merge
 
-  '@libnyanpasu/material-design-tailwind@0.2.0': {}
+  '@libnyanpasu/material-design-tailwind@0.2.1': {}
 
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
