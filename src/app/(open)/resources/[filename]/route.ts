@@ -38,6 +38,7 @@ export async function GET(
   return new NextResponse(buffer, {
     headers: {
       "content-type": res.headers.get("content-type") || "image/" + format,
+      "Cache-Control": "public, max-age=86400, immutable",
     },
   });
 }
