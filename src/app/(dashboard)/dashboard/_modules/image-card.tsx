@@ -37,7 +37,7 @@ export const ImageCard = async ({
 
       <ImageCardContent className="h-80" image={image} />
 
-      {type === "normal" && (
+      {(type === "normal" || type === undefined) && (
         <CardContent className="gap-0.5 text-sm">
           {Object.entries(mapping).map(([key, value]) => (
             <div key={key} className="flex gap-2 whitespace-nowrap">
