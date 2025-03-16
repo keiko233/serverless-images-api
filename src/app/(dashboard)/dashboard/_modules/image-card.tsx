@@ -29,15 +29,27 @@ export const ImageCard = async ({
     "Updated At": new Date(image.updatedAt).toLocaleString(),
   };
 
+  const cardType = type ?? "normal";
+
   return (
-    <Card className="relative truncate overflow-clip">
-      <CardHeader className="absolute z-10 truncate drop-shadow-sm">
+    <Card className="group relative truncate overflow-clip">
+      <CardHeader
+        className={cn(
+          "text-shadow-on-surface-variant/100 absolute z-10 truncate",
+          cardType === "small" && [
+            "opacity-0 transition-opacity group-hover:opacity-100",
+          ],
+        )}
+      >
         {image.filename}
       </CardHeader>
 
-      <ImageCardContent className="h-80" image={image} />
+      <ImageCardContent
+        className={cn(cardType === "normal" ? "h-80" : "aspect-square")}
+        image={image}
+      />
 
-      {(type === "normal" || type === undefined) && (
+      {cardType === "normal" && (
         <CardContent className="gap-0.5 text-sm">
           {Object.entries(mapping).map(([key, value]) => (
             <div key={key} className="flex gap-2 whitespace-nowrap">
@@ -50,7 +62,10 @@ export const ImageCard = async ({
       <CardFooter
         className={cn(
           "gap-1",
-          type === "small" && "absolute right-2 bottom-2 z-10",
+          cardType === "small" && [
+            "absolute right-0 bottom-0 z-10 opacity-0 transition-opacity",
+            "group-hover:opacity-100",
+          ],
         )}
       >
         <ImageDeleteButton image={image} />

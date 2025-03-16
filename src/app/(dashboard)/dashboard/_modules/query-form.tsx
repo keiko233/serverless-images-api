@@ -245,6 +245,65 @@ const QueryDirection = ({
   );
 };
 
+const ColsButton = ({
+  defaultValues,
+}: {
+  defaultValues?: PageSearchParams;
+}) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button>
+          {defaultValues?.cols
+            ? `Grid Cols: ${defaultValues.cols}`
+            : "Grid Cols"}
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuLabel className="pr-2">Grid Cols</DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        {defaultValues?.cols && (
+          <Link
+            href={{
+              query: {
+                ...defaultValues,
+                cols: null,
+              },
+            }}
+          >
+            <DropdownMenuItem>
+              <span>Reset Default</span>
+
+              <MaterialSymbolsCloseRounded className="size-6" />
+            </DropdownMenuItem>
+          </Link>
+        )}
+
+        {Array.from({ length: 5 }).map((_, i) => {
+          const index = i + 1;
+
+          return (
+            <Link
+              key={index}
+              href={{
+                query: {
+                  ...defaultValues,
+                  cols: index,
+                },
+              }}
+            >
+              <DropdownMenuItem>{index}</DropdownMenuItem>
+            </Link>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 export const QueryForm = ({
   defaultValues,
   characters,
@@ -272,6 +331,8 @@ export const QueryForm = ({
       </div>
 
       <div className="flex justify-end gap-1">
+        <ColsButton defaultValues={defaultValues} />
+
         {Object.entries(mapping).map(([cardType, Icon]) => {
           const isCurrent = defaultValues?.cardType === cardType;
 

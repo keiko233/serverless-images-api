@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 export type PageSearchParams = GetImagesParams & {
   cardType?: ImageCardType;
+  cols?: number;
 };
 
 export default async function Page({
@@ -20,7 +21,7 @@ export default async function Page({
 }: {
   searchParams: Promise<PageSearchParams>;
 }) {
-  const { page, limit, character, orderBy, direction, cardType } =
+  const { page, limit, character, orderBy, direction, cardType, cols } =
     await searchParams;
 
   const params: GetImagesParams = {
@@ -37,11 +38,12 @@ export default async function Page({
 
   return (
     <UploadProvider>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ring-0 outline-none">
         <QueryForm
           defaultValues={{
             ...params,
             cardType,
+            cols,
           }}
           characters={characters}
         />
@@ -49,10 +51,13 @@ export default async function Page({
         <div
           className={cn(
             "grid gap-4",
-            "lg:grid-cols-3",
-            "sm:grid-cols-2",
-            "grid-cols-1",
+            !cols && ["lg:grid-cols-3", "sm:grid-cols-2", "grid-cols-1"],
           )}
+          style={{
+            gridTemplateColumns: cols
+              ? `repeat(${cols}, minmax(0, 1fr))`
+              : undefined,
+          }}
         >
           {images.map((image) => (
             <ImageCard key={image.id} image={image} type={cardType} />
