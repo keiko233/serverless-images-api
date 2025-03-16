@@ -3,7 +3,7 @@ import { getImageAllCharacter, getImages } from "@/actions/query/image";
 import { GetImagesParams } from "@/actions/query/schema";
 import { Pagination } from "@/components/pagination";
 import { FloatButtons } from "./_modules/float-buttons";
-import { ImageCard } from "./_modules/image-card";
+import { ImageCard, ImageCardType } from "./_modules/image-card";
 import { QueryForm } from "./_modules/query-form";
 import { UploadProvider } from "./_modules/upload-provider";
 
@@ -11,14 +11,17 @@ export const runtime = "edge";
 
 export const dynamic = "force-dynamic";
 
-type PageSearchParams = Promise<GetImagesParams>;
+export type PageSearchParams = GetImagesParams & {
+  cardType?: ImageCardType;
+};
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: PageSearchParams;
+  searchParams: Promise<PageSearchParams>;
 }) {
-  const { page, limit, character, orderBy, direction } = await searchParams;
+  const { page, limit, character, orderBy, direction, cardType } =
+    await searchParams;
 
   const params: GetImagesParams = {
     page: page ? parseInt(String(page)) : undefined,
@@ -35,7 +38,13 @@ export default async function Page({
   return (
     <UploadProvider>
       <div className="flex flex-col gap-4">
-        <QueryForm defaultValues={params} characters={characters} />
+        <QueryForm
+          defaultValues={{
+            ...params,
+            cardType,
+          }}
+          characters={characters}
+        />
 
         <div
           className={cn(
@@ -46,7 +55,7 @@ export default async function Page({
           )}
         >
           {images.map((image) => (
-            <ImageCard key={image.id} image={image} />
+            <ImageCard key={image.id} image={image} type={cardType} />
           ))}
         </div>
 
@@ -55,7 +64,10 @@ export default async function Page({
         <Pagination
           className="py-4"
           pagination={pagination}
-          searchParams={params}
+          searchParams={{
+            ...params,
+            cardType,
+          }}
         />
       </div>
     </UploadProvider>

@@ -10,13 +10,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@libnyanpasu/material-design-react";
+import MaterialSymbolsCalendarViewMonth from "~icons/material-symbols/calendar-view-month";
 import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded";
+import MaterialSymbolsGridViewRounded from "~icons/material-symbols/grid-view-rounded";
 import Link from "next/link";
 import {
   GetImagesParams,
   getImagesUserOrderByFields,
 } from "@/actions/query/schema";
 import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
+import { PageSearchParams } from "../page";
 
 const LIMIT_LENGTH = 5;
 
@@ -246,20 +249,49 @@ export const QueryForm = ({
   defaultValues,
   characters,
 }: {
-  defaultValues?: GetImagesParams;
+  defaultValues?: PageSearchParams;
   characters: string[] | null;
 }) => {
+  const mapping = {
+    normal: MaterialSymbolsCalendarViewMonth,
+    small: MaterialSymbolsGridViewRounded,
+  };
+
   return (
-    <div className="flex flex-wrap gap-4">
-      <QueryOrder defaultValues={defaultValues} />
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap gap-4">
+        <QueryOrder defaultValues={defaultValues} />
 
-      <QueryDirection defaultValues={defaultValues} />
+        <QueryDirection defaultValues={defaultValues} />
 
-      <div className="flex-1" />
+        <div className="flex-1" />
 
-      <Characters defaultValues={defaultValues} characters={characters} />
+        <Characters defaultValues={defaultValues} characters={characters} />
 
-      <PageLimit defaultValues={defaultValues} />
+        <PageLimit defaultValues={defaultValues} />
+      </div>
+
+      <div className="flex justify-end gap-1">
+        {Object.entries(mapping).map(([cardType, Icon]) => {
+          const isCurrent = defaultValues?.cardType === cardType;
+
+          return (
+            <Link
+              key={cardType}
+              href={{
+                query: {
+                  ...defaultValues,
+                  cardType,
+                },
+              }}
+            >
+              <Button icon variant={isCurrent ? "flat" : undefined}>
+                <Icon className="size-6" />
+              </Button>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 };

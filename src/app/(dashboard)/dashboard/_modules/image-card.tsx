@@ -1,3 +1,4 @@
+import { cn } from "@libnyanpasu/material-design-libs";
 import {
   Card,
   CardContent,
@@ -10,7 +11,15 @@ import { ImageCardContent } from "./image-card-content";
 import { ImageDeleteButton } from "./image-delete-button";
 import { ImageDetailsDialog } from "./image-details-dialog";
 
-export const ImageCard = async ({ image }: { image: Image }) => {
+export type ImageCardType = "normal" | "small";
+
+export const ImageCard = async ({
+  image,
+  type,
+}: {
+  image: Image;
+  type?: ImageCardType;
+}) => {
   const mapping = {
     Character: image.character ?? (
       <span className="text-zinc-500">Unknown</span>
@@ -28,15 +37,22 @@ export const ImageCard = async ({ image }: { image: Image }) => {
 
       <ImageCardContent className="h-80" image={image} />
 
-      <CardContent className="gap-0.5 text-sm">
-        {Object.entries(mapping).map(([key, value]) => (
-          <div key={key} className="flex gap-2 whitespace-nowrap">
-            <b className="w-24">{key}:</b> <span>{value}</span>
-          </div>
-        ))}
-      </CardContent>
+      {type === "normal" && (
+        <CardContent className="gap-0.5 text-sm">
+          {Object.entries(mapping).map(([key, value]) => (
+            <div key={key} className="flex gap-2 whitespace-nowrap">
+              <b className="w-24">{key}:</b> <span>{value}</span>
+            </div>
+          ))}
+        </CardContent>
+      )}
 
-      <CardFooter className="gap-1">
+      <CardFooter
+        className={cn(
+          "gap-1",
+          type === "small" && "absolute right-2 bottom-2 z-10",
+        )}
+      >
         <ImageDeleteButton image={image} />
 
         <ImageDetailsDialog image={image} />

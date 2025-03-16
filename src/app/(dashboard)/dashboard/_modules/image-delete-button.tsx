@@ -28,7 +28,7 @@ export const ImageDeleteButton = ({ image }: { image: Image }) => {
   return (
     <Modal>
       <ModalTrigger asChild>
-        <Button icon variant="stroked">
+        <Button icon variant="raised">
           <MaterialSymbolsDeleteForeverRounded />
         </Button>
       </ModalTrigger>
