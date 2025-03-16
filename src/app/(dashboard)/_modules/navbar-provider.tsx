@@ -1,12 +1,8 @@
 "use client";
 
 import { useUpdateEffect } from "ahooks";
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { useIsMobile } from "@/hooks/use-is-moblie";
 
 const NavbarContext = createContext<{
@@ -25,7 +21,10 @@ export const useNavbarContext = () => {
 };
 
 export const NavbarProvider = ({ children }: PropsWithChildren) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useLocalStorage(
+    "navbar-collapsed",
+    false,
+  );
 
   const toggleCollapsed = () => {
     setIsCollapsed((prev) => !prev);
