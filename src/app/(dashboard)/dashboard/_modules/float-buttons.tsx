@@ -72,25 +72,35 @@ export const UpdateCurrentPageImageTagsButton = ({
       : images;
   }, [images, onlyUnknown]);
 
-  const handleClick = async () => {
+  const handleClick = useLockFn(async () => {
     setLoading(true);
     setProgress(0);
 
+    let failedCount = 0;
+
     for (let i = 0; i < filtedImages.length; i++) {
-      const current = filtedImages[i];
+      try {
+        const current = filtedImages[i];
+        const [, error] = await updateImageTags(current);
 
-      const [, error] = await updateImageTags(current);
-
-      if (error) {
-        console.error(error);
-        toast.error(`Failed to update image ${current.id} tags`);
+        if (error) {
+          failedCount++;
+          console.error(`Error updating tags for image ${current.id}:`, error);
+          toast.error(`Failed to update image ${current.id} tags`);
+        }
+      } finally {
+        setProgress(((i + 1) / filtedImages.length) * 100);
       }
+    }
 
-      setProgress(((i + 1) / filtedImages.length) * 100);
+    if (failedCount > 0) {
+      toast.warning(`Completed with ${failedCount} failures`);
+    } else {
+      toast.success("All images updated successfully");
     }
 
     setLoading(false);
-  };
+  });
 
   return (
     <Modal>
@@ -141,8 +151,6 @@ export const UpdateCurrentPageImageTagsButton = ({
                         className="aspect-square"
                         image={image}
                       />
-
-                      <div className="absolute top-2 px-2">{image.id}</div>
 
                       <div className="absolute right-2 bottom-2">
                         {prettyBytes(image.size)}
