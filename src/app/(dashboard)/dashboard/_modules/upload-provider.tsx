@@ -31,36 +31,32 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
   const [message, setMessage] = useState<string>();
 
   const handleUpload = useLockFn(async (filelist: FileList | File[]) => {
-    try {
-      setIsPending(true);
+    setIsPending(true);
 
-      let index = 1;
+    let index = 1;
 
-      for (const file of filelist) {
-        setMessage(
-          `Uploading ${file.name}, size: ${prettyBytes(file.size)} (${index++}/${filelist.length})`,
-        );
+    for (const file of filelist) {
+      setMessage(
+        `Uploading ${file.name}, size: ${prettyBytes(file.size)} (${index++}/${filelist.length})`,
+      );
 
-        const { name, size, type } = file;
-        const arrayBuffer = await file.arrayBuffer();
+      const { name, size, type } = file;
+      const arrayBuffer = await file.arrayBuffer();
 
-        const [, error] = await uploadImage({
-          name,
-          size,
-          type,
-          arrayBuffer: arrayBuffer,
-        });
+      const [, error] = await uploadImage({
+        name,
+        size,
+        type,
+        arrayBuffer: arrayBuffer,
+      });
 
-        if (error) {
-          throw new Error(formatError(error));
-        }
+      if (error) {
+        toast.error(`Failed to upload: ${formatError(error)}`);
       }
-    } catch (e) {
-      toast.error(`Failed to upload: ${formatError(e)}`);
-    } finally {
-      setMessage(undefined);
-      setIsPending(false);
     }
+
+    setMessage(undefined);
+    setIsPending(false);
   });
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

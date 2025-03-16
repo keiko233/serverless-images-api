@@ -21,7 +21,6 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { updateImageTags } from "@/actions/service/deepdanbooru";
 import { Image } from "@/schema";
-import { formatError } from "@/utils/fmt";
 import { selectFile } from "@/utils/select";
 import { ImageCardContent } from "./image-card-content";
 import { useUploadContext } from "./upload-provider";
@@ -73,27 +72,25 @@ export const UpdateCurrentPageImageTagsButton = ({
       : images;
   }, [images, onlyUnknown]);
 
-  const handleClick = useLockFn(async () => {
-    try {
-      setLoading(true);
-      setProgress(0);
+  const handleClick = async () => {
+    setLoading(true);
+    setProgress(0);
 
-      const totalImages = filtedImages.length;
+    for (let i = 0; i < filtedImages.length; i++) {
+      const current = filtedImages[i];
 
-      for (let i = 0; i < totalImages; i++) {
-        const { id, filename } = filtedImages[i];
-        await updateImageTags({
-          id,
-          filename,
-        });
-        setProgress(Math.round(((i + 1) / totalImages) * 100));
+      const [, error] = await updateImageTags(current);
+
+      if (error) {
+        console.error(error);
+        toast.error(`Failed to update image ${current.id} tags`);
       }
-    } catch (err) {
-      toast.error(formatError(err));
-    } finally {
-      setLoading(false);
+
+      setProgress(((i + 1) / filtedImages.length) * 100);
     }
-  });
+
+    setLoading(false);
+  };
 
   return (
     <Modal>
@@ -109,55 +106,61 @@ export const UpdateCurrentPageImageTagsButton = ({
             <ModalTitle>Update Current Page Image Tags</ModalTitle>
           </CardHeader>
 
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <span>Only Update Unknown</span>
+          {loading ? (
+            <CardContent className="w-96">
+              <div className="h-2 rounded bg-gray-200">
+                <div
+                  className="bg-primary h-full rounded transition-all duration-300 ease-in-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
 
-              <Switch
-                checked={onlyUnknown}
-                onClick={() => {
-                  setOnlyUnknown(!onlyUnknown);
-                }}
-              />
-            </div>
+              <p className="text-center text-sm">Processing: {progress}%</p>
+            </CardContent>
+          ) : (
+            <>
+              <CardContent>
+                <div className="flex items-center justify-between">
+                  <span>Only Update Unknown</span>
 
-            <div className="grid grid-cols-3">
-              {filtedImages.map((image) => (
-                <div key={image.id} className="relative overflow-hidden">
-                  <ImageCardContent className="aspect-square" image={image} />
-
-                  <div className="absolute top-2 px-2">{image.id}</div>
-
-                  <div className="absolute right-2 bottom-2 drop-shadow-sm">
-                    {prettyBytes(image.size)}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {loading && (
-              <div>
-                <div className="h-2 rounded bg-gray-200">
-                  <div
-                    className="bg-primary h-full rounded transition-all duration-300 ease-in-out"
-                    style={{ width: `${progress}%` }}
+                  <Switch
+                    checked={onlyUnknown}
+                    onClick={() => {
+                      setOnlyUnknown(!onlyUnknown);
+                    }}
                   />
                 </div>
 
-                <p className="mt-1 text-center text-sm">
-                  Processing: {progress}%
-                </p>
-              </div>
-            )}
-          </CardContent>
+                <div className="max-h-dvh-subtract-60 grid grid-cols-3 overflow-auto">
+                  {filtedImages.map((image) => (
+                    <div
+                      key={image.id}
+                      className="text-shadow-on-surface-variant/100 relative overflow-hidden"
+                    >
+                      <ImageCardContent
+                        className="aspect-square"
+                        image={image}
+                      />
 
-          <CardFooter className="gap-1">
-            <Button variant="flat" loading={loading} onClick={handleClick}>
-              Execute
-            </Button>
+                      <div className="absolute top-2 px-2">{image.id}</div>
 
-            <ModalClose disabled={loading}>Close</ModalClose>
-          </CardFooter>
+                      <div className="absolute right-2 bottom-2">
+                        {prettyBytes(image.size)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+
+              <CardFooter className="gap-1">
+                <Button variant="flat" onClick={handleClick}>
+                  Execute
+                </Button>
+
+                <ModalClose>Close</ModalClose>
+              </CardFooter>
+            </>
+          )}
         </Card>
       </ModalContent>
     </Modal>
