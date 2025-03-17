@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getImage } from "@/actions/query/image";
+import { getLegacyUserAgentSetting } from "@/actions/query/setting";
 import { getFile } from "@/actions/service/onedrive";
 import { Image } from "@/schema";
 import { formatError } from "@/utils/fmt";
@@ -19,12 +20,36 @@ const SearchParamsSchema = z.object({
 });
 
 const getImageProxyUrl = (request: NextRequest, query: Image) => {
-  const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
+  const requestUrl = new URL(request.url);
+  const baseUrl = `${requestUrl.protocol}//${requestUrl.host}`;
 
   const [, format] = query.filename.split(".");
 
-  return `${baseUrl}/resources/${query.id}.${format}`;
+  const path = `/resources/${query.id}.${format}`;
+
+  const url = `${baseUrl}${path}`;
+
+  return [url, path];
+};
+
+const checkLegacyAPI = async (request: NextRequest) => {
+  const ua = request.headers.get("user-agent") || "";
+
+  const uaList = await getLegacyUserAgentSetting();
+
+  return (
+    uaList?.value.some((pattern) => {
+      try {
+        const regex = new RegExp(pattern);
+        const isMatch = regex.test(ua);
+
+        return isMatch;
+      } catch (e) {
+        console.error(`Invalid regex pattern: ${pattern}`, e);
+        return false;
+      }
+    }) || false
+  );
 };
 
 export async function GET(request: NextRequest) {
@@ -42,25 +67,6 @@ export async function GET(request: NextRequest) {
 
     if (!query) {
       throw new Error("No image found");
-    }
-
-    // return json object
-    if (method === Method.JSON) {
-      return new NextResponse(
-        JSON.stringify({
-          id: query.id,
-          url: getImageProxyUrl(request, query),
-          size: query.size,
-          character: query.character,
-          aliases: query.aliases,
-          tags: query.tags,
-        }),
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-        },
-      );
     }
 
     // return base64 image
@@ -92,8 +98,32 @@ export async function GET(request: NextRequest) {
       return new NextResponse(dataUrl);
     }
 
+    const [url, path] = getImageProxyUrl(request, query);
+
+    // return json object
+    if (method === Method.JSON) {
+      const useLegacyAPI = await checkLegacyAPI(request);
+
+      const response = useLegacyAPI
+        ? { response: [{ path, url }] }
+        : {
+            id: query.id,
+            url,
+            size: query.size,
+            character: query.character,
+            aliases: query.aliases,
+            tags: query.tags,
+          };
+
+      return new NextResponse(JSON.stringify(response), {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    }
+
     // redirect to image URL
-    return NextResponse.redirect(getImageProxyUrl(request, query));
+    return NextResponse.redirect(url);
   } catch (error) {
     const message = {
       message: formatError(error),

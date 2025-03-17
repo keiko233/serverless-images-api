@@ -51,3 +51,11 @@ export const GetImagesSchema = z.object({
 });
 
 export type GetImagesParams = z.infer<typeof GetImagesSchema>;
+
+export const UpsertLegacyUserAgentSettingSchema = z
+  .array(z.string())
+  .default([]);
+
+export type UpsertLegacyUserAgentSetting = z.infer<
+  typeof UpsertLegacyUserAgentSettingSchema
+>;

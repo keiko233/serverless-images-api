@@ -1,19 +1,22 @@
 import { cn } from "@libnyanpasu/material-design-libs";
 import {
+  getLegacyUserAgentSetting,
   getOnedrivePathSetting,
   getOnedriveSetting,
 } from "@/actions/query/setting";
 import { OnedriveCard } from "./_modules/onedrive-card";
 import { OnedrivePathCard } from "./_modules/onedrive-path-card";
+import { UserAgentCard } from "./_modules/user-agent-card";
 
 export const runtime = "edge";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const [onedrive, onedrivePath] = await Promise.all([
+  const [onedrive, onedrivePath, userAgent] = await Promise.all([
     getOnedriveSetting(),
     getOnedrivePathSetting(),
+    getLegacyUserAgentSetting(),
   ]);
 
   return (
@@ -21,14 +24,10 @@ export default async function Page() {
       <OnedriveCard defaultValues={onedrive} />
 
       <OnedrivePathCard
-        defaultValues={
-          onedrivePath
-            ? {
-                path: onedrivePath.value,
-              }
-            : null
-        }
+        defaultValues={onedrivePath ? { path: onedrivePath.value } : null}
       />
+
+      <UserAgentCard defaultValues={userAgent?.value ?? null} />
     </div>
   );
 }

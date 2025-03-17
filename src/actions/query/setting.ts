@@ -1,10 +1,18 @@
 "use server";
 
 import { createServerAction } from "zsa";
-import { SETTING_ONEDRIVE_KEY, SETTING_ONEDRIVE_PATH_KEY } from "@/consts";
+import {
+  SETTING_LEGACY_USER_AGENT_KEY,
+  SETTING_ONEDRIVE_KEY,
+  SETTING_ONEDRIVE_PATH_KEY,
+} from "@/consts";
 import { getKysely } from "@/lib/kysely";
 import { OnedriveConfig, OnedriveConfigSchema } from "@/lib/onedrive";
-import { UpsertOnedrivePathSettingSchema } from "./schema";
+import {
+  UpsertLegacyUserAgentSetting,
+  UpsertLegacyUserAgentSettingSchema,
+  UpsertOnedrivePathSettingSchema,
+} from "./schema";
 
 export const getOnedriveSetting = async (options?: { withRaw?: boolean }) => {
   const withRaw = options?.withRaw;
@@ -95,6 +103,52 @@ export const upsertOnedrivePathSetting = createServerAction()
         updatedAt: new Date().getTime(),
       })
       .onConflict((oc) => oc.column("key").doUpdateSet({ value: input.path }))
+      .returning("id")
+      .executeTakeFirstOrThrow();
+
+    return result;
+  });
+
+export const getLegacyUserAgentSetting = async () => {
+  const kysely = await getKysely();
+
+  const result = await kysely
+    .selectFrom("Setting")
+    .where("key", "==", SETTING_LEGACY_USER_AGENT_KEY)
+    .selectAll()
+    .executeTakeFirst();
+
+  if (!result) {
+    return null;
+  }
+
+  const value = JSON.parse(result.value) as UpsertLegacyUserAgentSetting
+
+  return {
+    ...result,
+    value,
+  };
+};
+
+export const upsertLegacyUserAgentSetting = createServerAction()
+  .input(UpsertLegacyUserAgentSettingSchema)
+  .handler(async ({ input }) => {
+    const kysely = await getKysely();
+
+    const id = crypto.randomUUID();
+
+    const value = JSON.stringify(input);
+
+    const result = await kysely
+      .insertInto("Setting")
+      .values({
+        id,
+        key: SETTING_LEGACY_USER_AGENT_KEY,
+        value,
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime(),
+      })
+      .onConflict((oc) => oc.column("key").doUpdateSet({ value }))
       .returning("id")
       .executeTakeFirstOrThrow();
 
