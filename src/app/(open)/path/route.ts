@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getImageAllCharacter } from "@/actions/query/image";
+import { RANDOM_CHARACTER_KEYWORD } from "@/consts";
 
 export const runtime = "edge";
 
@@ -17,8 +18,8 @@ export async function GET() {
   }
 
   return new NextResponse(
-    JSON.stringify(
-      characters.map((item) => ({
+    JSON.stringify([
+      ...characters.map((item) => ({
         name: item
           .split("_")
           .map(
@@ -29,7 +30,11 @@ export async function GET() {
           .replace(/\s*\([^)]*\)/g, ""), // Remove parentheses and their content
         path: item,
       })),
-    ),
+      {
+        name: "Random",
+        path: RANDOM_CHARACTER_KEYWORD,
+      },
+    ]),
     {
       headers: {
         "content-type": "application/json",

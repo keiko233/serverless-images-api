@@ -4,7 +4,7 @@ import { sql } from "kysely";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createServerAction } from "zsa";
-import { DEFAULT_CARD_PAGE_SIZE } from "@/consts";
+import { DEFAULT_CARD_PAGE_SIZE, RANDOM_CHARACTER_KEYWORD } from "@/consts";
 import { getKysely } from "@/lib/kysely";
 import {
   CreateImageParams,
@@ -15,31 +15,27 @@ import {
 export const getImage = async (options?: { character?: string }) => {
   const kysely = await getKysely();
 
-  if (options?.character) {
-    // Try character fuzzy matching filter first
-    const characterImage = await kysely
+  // If character is "random" or not specified, return a random image
+  if (!options?.character || options.character === RANDOM_CHARACTER_KEYWORD) {
+    return kysely
       .selectFrom("Image")
       .selectAll()
-      .where("character", "like", `%${options.character}%`)
       .orderBy(sql`RANDOM()`)
       .limit(1)
       .executeTakeFirst();
-
-    // If found, return it
-    if (characterImage) {
-      return characterImage;
-    }
   }
 
-  // If no character specified or no match found, return a random image
-  const randomImage = await kysely
+  // Try character fuzzy matching filter
+  const characterImage = await kysely
     .selectFrom("Image")
     .selectAll()
+    .where("character", "like", `%${options.character}%`)
     .orderBy(sql`RANDOM()`)
     .limit(1)
     .executeTakeFirst();
 
-  return randomImage || null;
+  // If found, return it; otherwise return null
+  return characterImage || null;
 };
 
 export const getImages = async (options?: GetImagesParams) => {
