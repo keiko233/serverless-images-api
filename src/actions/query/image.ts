@@ -15,24 +15,31 @@ import {
 export const getImage = async (options?: { character?: string }) => {
   const kysely = await getKysely();
 
-  let query = kysely
+  if (options?.character) {
+    // Try character fuzzy matching filter first
+    const characterImage = await kysely
+      .selectFrom("Image")
+      .selectAll()
+      .where("character", "like", `%${options.character}%`)
+      .orderBy(sql`RANDOM()`)
+      .limit(1)
+      .executeTakeFirst();
+
+    // If found, return it
+    if (characterImage) {
+      return characterImage;
+    }
+  }
+
+  // If no character specified or no match found, return a random image
+  const randomImage = await kysely
     .selectFrom("Image")
     .selectAll()
     .orderBy(sql`RANDOM()`)
-    .limit(1);
+    .limit(1)
+    .executeTakeFirst();
 
-  // Add character filter if provided
-  if (options?.character) {
-    query = query.where("character", "=", options.character);
-  }
-
-  const image = await query.executeTakeFirst();
-
-  if (!image) {
-    return null;
-  }
-
-  return image;
+  return randomImage || null;
 };
 
 export const getImages = async (options?: GetImagesParams) => {
