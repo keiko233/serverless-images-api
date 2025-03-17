@@ -32,6 +32,12 @@ export default async function Page({
     direction,
   };
 
+  const mergedSearchParams = {
+    ...params,
+    cardType,
+    cols,
+  };
+
   const { images, pagination } = await getImages(params);
 
   const [characters] = await getImageAllCharacter();
@@ -39,14 +45,7 @@ export default async function Page({
   return (
     <UploadProvider>
       <div className="flex flex-col gap-4 ring-0 outline-none">
-        <QueryForm
-          defaultValues={{
-            ...params,
-            cardType,
-            cols,
-          }}
-          characters={characters}
-        />
+        <QueryForm defaultValues={mergedSearchParams} characters={characters} />
 
         <div
           className={cn(
@@ -69,10 +68,7 @@ export default async function Page({
         <Pagination
           className="py-4"
           pagination={pagination}
-          searchParams={{
-            ...params,
-            cardType,
-          }}
+          searchParams={mergedSearchParams}
         />
       </div>
     </UploadProvider>
