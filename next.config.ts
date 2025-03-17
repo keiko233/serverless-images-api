@@ -29,10 +29,25 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '*.sharepoint.com',
+        protocol: "https",
+        hostname: "*.sharepoint.com",
       },
     ],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/help",
+        destination: "/playground",
+        permanent: true,
+      },
+      {
+        source: "/help.html",
+        destination: "/playground",
+        permanent: true,
+      },
+    ];
   },
 };
 
