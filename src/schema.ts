@@ -89,6 +89,18 @@ export const SettingSchema = z.object({
 
 export type Setting = z.infer<typeof SettingSchema>;
 
+export const RequestSchema = z.object({
+  id: z.string(),
+  ipAddress: z.string(),
+  endpoint: z.string().nullable(),
+  userAgent: z.string().nullable(),
+  method: z.string().nullable(),
+  createdAt: z.number(),
+  updatedAt: z.number(),
+});
+
+export type Request = z.infer<typeof RequestSchema>;
+
 // not need zod schema
 export interface Database {
   Image: Image;
@@ -97,6 +109,7 @@ export interface Database {
   Account: Account;
   Verification: Verification;
   Setting: Setting;
+  Request: Request;
 }
 
 export type OrderByKeys<TableName extends keyof Database> =

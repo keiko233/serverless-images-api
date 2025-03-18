@@ -59,3 +59,10 @@ export const UpsertLegacyUserAgentSettingSchema = z
 export type UpsertLegacyUserAgentSetting = z.infer<
   typeof UpsertLegacyUserAgentSettingSchema
 >;
+
+export const GetRequestRecords = z.object({
+  page: z.number().int().optional(),
+  limit: z.number().int().optional(),
+});
+
+export type GetRequestParams = z.infer<typeof GetRequestRecords>;

@@ -10,6 +10,7 @@ import { useNavbarContext } from "./navbar-provider";
 const LINKS = {
   dashboard: "/dashboard",
   setting: "/dashboard/setting",
+  request: "/dashboard/request",
 };
 
 export const NavbarAside = () => {
