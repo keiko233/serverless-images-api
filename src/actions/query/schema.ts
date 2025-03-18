@@ -63,6 +63,8 @@ export type UpsertLegacyUserAgentSetting = z.infer<
 export const GetRequestRecords = z.object({
   page: z.number().int().optional(),
   limit: z.number().int().optional(),
+  search: z.string().optional(),
+  direction: z.enum(["asc", "desc"]).optional(),
 });
 
 export type GetRequestParams = z.infer<typeof GetRequestRecords>;

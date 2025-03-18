@@ -1,9 +1,11 @@
 "use server";
 
 import { getRequestContext } from "@cloudflare/next-on-pages";
+import type { ExpressionBuilder } from "kysely";
 import { createServerAction } from "zsa";
 import { DEFAULT_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
+import { Database } from "@/schema";
 import { GetRequestRecords } from "./schema";
 
 export const checkAndRecordRequest = async (params: {
@@ -45,26 +47,46 @@ export const getRequestRecords = createServerAction()
     const limit = Number(input?.limit) || DEFAULT_PAGE_SIZE;
     const offset = (page - 1) * limit;
 
-    const requests = await kysely
-      .selectFrom("Request")
-      .selectAll()
-      .limit(limit)
-      .offset(offset)
-      .orderBy("createdAt", "desc")
-      .execute();
+    const searchCondition = (eb: ExpressionBuilder<Database, "Request">) => {
+      if (!input?.search) return eb.val(true);
 
-    const count = await kysely
-      .selectFrom("Request")
-      .select(({ fn }) => [fn.count("id").as("total")])
-      .executeTakeFirstOrThrow();
+      const searchTerm = `%${input.search}%`;
+      return eb.or([
+        eb("ipAddress", "like", searchTerm),
+        eb("asn", "like", searchTerm),
+        eb("city", "like", searchTerm),
+        eb("country", "like", searchTerm),
+        eb("region", "like", searchTerm),
+        eb("endpoint", "like", searchTerm),
+        eb("userAgent", "like", searchTerm),
+        eb("method", "like", searchTerm),
+      ]);
+    };
+
+    const [requests, countResult] = await Promise.all([
+      kysely
+        .selectFrom("Request")
+        .where(searchCondition)
+        .selectAll()
+        .limit(limit)
+        .offset(offset)
+        .orderBy("createdAt", input.direction || "desc")
+        .execute(),
+
+      kysely
+        .selectFrom("Request")
+        .where(searchCondition)
+        .select(({ fn }) => [fn.count("id").as("total")])
+        .executeTakeFirstOrThrow(),
+    ]);
 
     return {
       requests,
       pagination: {
         page,
         limit,
-        total: Number(count.total),
-        totalPages: Math.ceil(Number(count.total) / limit),
+        total: Number(countResult.total),
+        totalPages: Math.ceil(Number(countResult.total) / limit),
       },
     };
   });
