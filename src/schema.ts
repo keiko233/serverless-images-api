@@ -92,6 +92,10 @@ export type Setting = z.infer<typeof SettingSchema>;
 export const RequestSchema = z.object({
   id: z.string(),
   ipAddress: z.string(),
+  country: z.string().nullable(),
+  city: z.string().nullable(),
+  region: z.string().nullable(),
+  asn: z.string().nullable(),
   endpoint: z.string().nullable(),
   userAgent: z.string().nullable(),
   method: z.string().nullable(),

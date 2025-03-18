@@ -1,5 +1,6 @@
 "use server";
 
+import { getRequestContext } from "@cloudflare/next-on-pages";
 import { createServerAction } from "zsa";
 import { DEFAULT_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
@@ -15,12 +16,18 @@ export const checkAndRecordRequest = async (params: {
 
   const id = crypto.randomUUID();
 
+  const { cf } = getRequestContext();
+
   // TODO: limit the number of requests from the same IP address
   await kysely
     .insertInto("Request")
     .values({
       id,
       ...params,
+      country: cf.country,
+      city: cf.city,
+      region: cf.region,
+      asn: String(cf.asn),
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
     })
