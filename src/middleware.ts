@@ -34,7 +34,7 @@ export default async function authMiddleware(request: NextRequest) {
         request.headers.get("x-forwarded-for") ||
         "Unknown",
       method: request.method,
-      endpoint: request.nextUrl.pathname,
+      endpoint: request.nextUrl.pathname + request.nextUrl.search,
       userAgent: request.headers.get("user-agent") || undefined,
     });
 
