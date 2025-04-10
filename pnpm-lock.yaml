@@ -16,7 +16,7 @@ importers:
         version: 0.2.2(@material/material-color-utilities@0.3.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(lodash-es@4.17.21)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-react':
         specifier: ^0.2.2
-        version: 0.2.2(@material/material-color-utilities@0.3.0)(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(lodash-es@4.17.21)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwind-merge@3.0.2)
+        version: 0.2.2(@material/material-color-utilities@0.3.0)(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(lodash-es@4.17.21)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-tailwind':
         specifier: ^0.2.2
         version: 0.2.2
@@ -34,7 +34,7 @@ importers:
         version: 1.2.4(typescript@5.8.2)
       framer-motion:
         specifier: ^12.5.0
-        version: 12.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next:
         specifier: 15.1.6
         version: 15.1.6(@babel/core@7.26.10)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2769,8 +2769,8 @@ packages:
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
-  framer-motion@12.5.0:
-    resolution: {integrity: sha512-buPlioFbH9/W7rDzYh1C09AuZHAk2D1xTA1BlounJ2Rb9aRg84OXexP0GLd+R83v0khURdMX7b5MKnGTaSg5iA==}
+  framer-motion@12.6.3:
+    resolution: {integrity: sha512-2hsqknz23aloK85bzMc9nSR2/JP+fValQ459ZTVElFQ0xgwR2YqNjYSuDZdFBPOwVCt4Q9jgyTt6hg6sVOALzw==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -3422,11 +3422,11 @@ packages:
   mlly@1.7.4:
     resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
 
-  motion-dom@12.5.0:
-    resolution: {integrity: sha512-uH2PETDh7m+Hjd1UQQ56yHqwn83SAwNjimNPE/kC+Kds0t4Yh7+29rfo5wezVFpPOv57U4IuWved5d1x0kNhbQ==}
+  motion-dom@12.6.3:
+    resolution: {integrity: sha512-gRY08RjcnzgFYLemUZ1lo/e9RkBxR+6d4BRvoeZDSeArG4XQXERSPapKl3LNQRu22Sndjf1h+iavgY0O4NrYqA==}
 
-  motion-utils@12.5.0:
-    resolution: {integrity: sha512-+hFFzvimn0sBMP9iPxBa9OtRX35ZQ3py0UHnb8U29VD+d8lQ8zH3dTygJWqK7av2v6yhg7scj9iZuvTS0f4+SA==}
+  motion-utils@12.6.3:
+    resolution: {integrity: sha512-R/b3Ia2VxtTNZ4LTEO5pKYau1OUNHOuUfxuP0WFCTDYdHkeTBR9UtxR1cc8mDmKr8PEhmmfnTKGz3rSMjNRoRg==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -5259,7 +5259,7 @@ snapshots:
       lodash-es: 4.17.21
       tailwind-merge: 3.0.2
 
-  '@libnyanpasu/material-design-react@0.2.2(@material/material-color-utilities@0.3.0)(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(lodash-es@4.17.21)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwind-merge@3.0.2)':
+  '@libnyanpasu/material-design-react@0.2.2(@material/material-color-utilities@0.3.0)(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(lodash-es@4.17.21)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwind-merge@3.0.2)':
     dependencies:
       '@libnyanpasu/material-design-components': 0.2.2(@material/material-color-utilities@0.3.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(lodash-es@4.17.21)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-libs': 0.2.2(@material/material-color-utilities@0.3.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(lodash-es@4.17.21)(tailwind-merge@3.0.2)
@@ -5269,7 +5269,7 @@ snapshots:
       '@radix-ui/react-slot': 1.1.2(@types/react@19.1.0)(react@19.1.0)
       '@radix-ui/react-switch': 1.1.3(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       ahooks: 3.8.4(react@19.1.0)
-      framer-motion: 12.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      framer-motion: 12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
     transitivePeerDependencies:
@@ -7281,10 +7281,10 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@12.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  framer-motion@12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      motion-dom: 12.5.0
-      motion-utils: 12.5.0
+      motion-dom: 12.6.3
+      motion-utils: 12.6.3
       tslib: 2.8.1
     optionalDependencies:
       react: 19.1.0
@@ -7911,11 +7911,11 @@ snapshots:
       pkg-types: 1.3.1
       ufo: 1.5.4
 
-  motion-dom@12.5.0:
+  motion-dom@12.6.3:
     dependencies:
-      motion-utils: 12.5.0
+      motion-utils: 12.6.3
 
-  motion-utils@12.5.0: {}
+  motion-utils@12.6.3: {}
 
   mri@1.2.0: {}
 
