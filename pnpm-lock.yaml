@@ -19,7 +19,7 @@ importers:
         version: 0.2.2(@material/material-color-utilities@0.3.0)(@types/react-dom@19.1.2(@types/react@19.1.0))(@types/react@19.1.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(framer-motion@12.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(lodash-es@4.17.21)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(tailwind-merge@3.0.2)
       '@libnyanpasu/material-design-tailwind':
         specifier: ^0.2.2
-        version: 0.2.2
+        version: 0.2.4
       '@svgr/core':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.8.2)
@@ -983,8 +983,8 @@ packages:
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@libnyanpasu/material-design-tailwind@0.2.2':
-    resolution: {integrity: sha512-b82WhQMs03hPJr7XkM+Ijniq18y1GUQA2bVsHx7qk5aWq23LGs6c1Ob00SoEtsP07qmeREcmCA0yWSD3sV2wqA==}
+  '@libnyanpasu/material-design-tailwind@0.2.4':
+    resolution: {integrity: sha512-uooxlqmur0EgvHw9RX943dfko+VkF6/j0rB89y2K5c+p2esT1Klnn97dMVqKHRP8mgirVPuAjyFbJ7aXSSckug==}
 
   '@mapbox/node-pre-gyp@2.0.0':
     resolution: {integrity: sha512-llMXd39jtP0HpQLVI37Bf1m2ADlEb35GYSh1SDSLsBhR+5iCxiNGlT31yqbNtVHygHAtMy6dWFERpU2JgufhPg==}
@@ -5285,7 +5285,7 @@ snapshots:
       - lodash-es
       - tailwind-merge
 
-  '@libnyanpasu/material-design-tailwind@0.2.2': {}
+  '@libnyanpasu/material-design-tailwind@0.2.4': {}
 
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
