@@ -112,11 +112,11 @@ importers:
         specifier: ^9.1.7
         version: 9.1.7
       kysely:
-        specifier: ^0.27.6
-        version: 0.27.6
+        specifier: ^0.28.0
+        version: 0.28.1
       kysely-d1:
         specifier: ^0.3.0
-        version: 0.3.0(kysely@0.27.6)
+        version: 0.3.0(kysely@0.28.1)
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -3128,6 +3128,10 @@ packages:
   kysely@0.27.6:
     resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
     engines: {node: '>=14.0.0'}
+
+  kysely@0.28.1:
+    resolution: {integrity: sha512-umkhsHB0y2JvI83DUtuYYTfvr063xTHTcr/k1z0E2Bg39zGiBcdDvlbP79YMcItn55pKQtD120sZmKa9jhCVtw==}
+    engines: {node: '>=18.0.0'}
 
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
@@ -7540,11 +7544,13 @@ snapshots:
 
   kolorist@1.8.0: {}
 
-  kysely-d1@0.3.0(kysely@0.27.6):
+  kysely-d1@0.3.0(kysely@0.28.1):
     dependencies:
-      kysely: 0.27.6
+      kysely: 0.28.1
 
   kysely@0.27.6: {}
+
+  kysely@0.28.1: {}
 
   language-subtag-registry@0.3.23: {}
 
