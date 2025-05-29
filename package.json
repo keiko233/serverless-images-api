@@ -60,7 +60,7 @@
 		"tsx": "^4.19.3",
 		"typescript": "^5.8.2",
 		"unplugin-icons": "^22.1.0",
-		"vercel": "^41.4.0",
+		"vercel": "^42.0.0",
 		"wrangler": "^4.0.0"
 	},
 	"engines": {
