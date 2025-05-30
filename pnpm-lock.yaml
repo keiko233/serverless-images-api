@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@iconify-json/material-symbols':
         specifier: ^1.2.15
-        version: 1.2.22
+        version: 1.2.23
       '@libnyanpasu/material-design-libs':
         specifier: ^0.2.2
         version: 0.2.4(@material/material-color-utilities@0.3.0)(class-variance-authority@0.7.1)(clsx@2.1.1)(lodash-es@4.17.21)(tailwind-merge@3.3.0)
@@ -61,13 +61,13 @@ importers:
         version: 3.1.1(react@19.1.0)
       zod:
         specifier: ^3.24.2
-        version: 3.25.36
+        version: 3.25.42
       zsa:
         specifier: ^0.6.0
-        version: 0.6.0(zod@3.25.36)
+        version: 0.6.0(zod@3.25.42)
       zsa-react:
         specifier: ^0.2.3
-        version: 0.2.3(react@19.1.0)(zod@3.25.36)
+        version: 0.2.3(react@19.1.0)(zod@3.25.42)
     devDependencies:
       '@cloudflare/next-on-pages':
         specifier: ^1.13.10
@@ -77,7 +77,7 @@ importers:
         version: 4.20250529.0
       '@commitlint/cli':
         specifier: ^19.8.0
-        version: 19.8.1(@types/node@22.15.24)(typescript@5.8.3)
+        version: 19.8.1(@types/node@22.15.27)(typescript@5.8.3)
       '@commitlint/config-conventional':
         specifier: ^19.8.0
         version: 19.8.1
@@ -92,7 +92,7 @@ importers:
         version: 4.1.8
       '@types/node':
         specifier: ^22.13.10
-        version: 22.15.24
+        version: 22.15.27
       '@types/react':
         specifier: ^19.0.10
         version: 19.1.6
@@ -824,8 +824,8 @@ packages:
       '@vue/compiler-sfc':
         optional: true
 
-  '@iconify-json/material-symbols@1.2.22':
-    resolution: {integrity: sha512-raleOIRt8iPtwAkDzmw/c5zb06nIaicsYs5bZ3yfRjBxuYT/UYNa2ZFQQMl3uuTTiZuUXwFa1M8PJW3CFRAN0w==}
+  '@iconify-json/material-symbols@1.2.23':
+    resolution: {integrity: sha512-GoNuWl8dVDiVFQq+HEgbOmPW0vTycs7qXgtpfBAx4XgDI4MVwnEIjIcYy/tlzzjMF1TPDwkX5fI1+KIylSdBwQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1653,8 +1653,8 @@ packages:
   '@types/node@16.18.11':
     resolution: {integrity: sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==}
 
-  '@types/node@22.15.24':
-    resolution: {integrity: sha512-w9CZGm9RDjzTh/D+hFwlBJ3ziUaVw7oufKA3vOFSOZlzmW9AkZnfjPb+DLnrV6qtgL/LNmP0/2zBNCFHL3F0ng==}
+  '@types/node@22.15.27':
+    resolution: {integrity: sha512-5fF+eu5mwihV2BeVtX5vijhdaZOfkQTATrePEaXTcKqI16LhJ7gi2/Vhd9OZM0UojcdmiOCVg5rrax+i1MdoQQ==}
 
   '@types/react-dom@19.1.5':
     resolution: {integrity: sha512-CMCjrWucUBZvohgZxkjd6S9h0nZxXjzus6yDfUb+xLxYM7VvjKNH1tQrE9GWLql1XoOP4/Ds3bwFqShHUYraGg==}
@@ -4649,8 +4649,8 @@ packages:
   zod@3.22.3:
     resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
 
-  zod@3.25.36:
-    resolution: {integrity: sha512-eRFS3i8T0IrpGdL8HQyqFAugGOn7jOjyGgGdtv5NY4Wkhi7lJDk732bNZ609YMIGFbLoaj6J69O1Mura23gfIw==}
+  zod@3.25.42:
+    resolution: {integrity: sha512-PcALTLskaucbeHc41tU/xfjfhcz8z0GdhhDcSgrCTmSazUuqnYqiXO63M0QUBVwpBlsLsNVn5qHSC5Dw3KZvaQ==}
 
   zsa-react@0.2.3:
     resolution: {integrity: sha512-THCoIIhtEU3jXTrNBM/PBc0PyHCekizSGEc+fg0LGo1NM1J02LFQN7ICR948X25IjtkZdvxUZmT0+M73GG8eEw==}
@@ -4850,11 +4850,11 @@ snapshots:
 
   '@cloudflare/workers-types@4.20250529.0': {}
 
-  '@commitlint/cli@19.8.1(@types/node@22.15.24)(typescript@5.8.3)':
+  '@commitlint/cli@19.8.1(@types/node@22.15.27)(typescript@5.8.3)':
     dependencies:
       '@commitlint/format': 19.8.1
       '@commitlint/lint': 19.8.1
-      '@commitlint/load': 19.8.1(@types/node@22.15.24)(typescript@5.8.3)
+      '@commitlint/load': 19.8.1(@types/node@22.15.27)(typescript@5.8.3)
       '@commitlint/read': 19.8.1
       '@commitlint/types': 19.8.1
       tinyexec: 1.0.1
@@ -4901,7 +4901,7 @@ snapshots:
       '@commitlint/rules': 19.8.1
       '@commitlint/types': 19.8.1
 
-  '@commitlint/load@19.8.1(@types/node@22.15.24)(typescript@5.8.3)':
+  '@commitlint/load@19.8.1(@types/node@22.15.27)(typescript@5.8.3)':
     dependencies:
       '@commitlint/config-validator': 19.8.1
       '@commitlint/execute-rule': 19.8.1
@@ -4909,7 +4909,7 @@ snapshots:
       '@commitlint/types': 19.8.1
       chalk: 5.4.1
       cosmiconfig: 9.0.0(typescript@5.8.3)
-      cosmiconfig-typescript-loader: 6.1.0(@types/node@22.15.24)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3)
+      cosmiconfig-typescript-loader: 6.1.0(@types/node@22.15.27)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -5237,7 +5237,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@iconify-json/material-symbols@1.2.22':
+  '@iconify-json/material-symbols@1.2.23':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -6035,7 +6035,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 22.15.24
+      '@types/node': 22.15.27
 
   '@types/estree@1.0.7': {}
 
@@ -6045,7 +6045,7 @@ snapshots:
 
   '@types/node@16.18.11': {}
 
-  '@types/node@22.15.24':
+  '@types/node@22.15.27':
     dependencies:
       undici-types: 6.21.0
 
@@ -6565,7 +6565,7 @@ snapshots:
       jose: 5.10.0
       kysely: 0.28.2
       nanostores: 0.11.4
-      zod: 3.25.36
+      zod: 3.25.42
 
   better-call@1.0.9:
     dependencies:
@@ -6734,9 +6734,9 @@ snapshots:
 
   cookie@0.7.2: {}
 
-  cosmiconfig-typescript-loader@6.1.0(@types/node@22.15.24)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3):
+  cosmiconfig-typescript-loader@6.1.0(@types/node@22.15.27)(cosmiconfig@9.0.0(typescript@5.8.3))(typescript@5.8.3):
     dependencies:
-      '@types/node': 22.15.24
+      '@types/node': 22.15.27
       cosmiconfig: 9.0.0(typescript@5.8.3)
       jiti: 2.4.2
       typescript: 5.8.3
@@ -9237,14 +9237,14 @@ snapshots:
 
   zod@3.22.3: {}
 
-  zod@3.25.36: {}
+  zod@3.25.42: {}
 
-  zsa-react@0.2.3(react@19.1.0)(zod@3.25.36):
+  zsa-react@0.2.3(react@19.1.0)(zod@3.25.42):
     dependencies:
       react: 19.1.0
-      zod: 3.25.36
-      zsa: 0.6.0(zod@3.25.36)
+      zod: 3.25.42
+      zsa: 0.6.0(zod@3.25.42)
 
-  zsa@0.6.0(zod@3.25.36):
+  zsa@0.6.0(zod@3.25.42):
     dependencies:
-      zod: 3.25.36
+      zod: 3.25.42
