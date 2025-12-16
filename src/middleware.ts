@@ -1,3 +1,5 @@
+// proxy block by https://github.com/opennextjs/opennextjs-cloudflare/issues/988#issuecomment-3592316115
+
 import { getSessionCookie } from "better-auth/cookies";
 import { NextResponse, type NextRequest } from "next/server";
 import { checkAndRecordRequest } from "./actions/query/request";
