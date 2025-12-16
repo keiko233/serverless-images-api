@@ -20,7 +20,7 @@ export function formatError(err: unknown): string {
     try {
       return err.errors
         .map(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+           
           (e: any) =>
             `${e.path?.join?.(".") || "unknown"}: ${e.message || "Invalid value"}`,
         )

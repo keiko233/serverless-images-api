@@ -50,7 +50,7 @@ interface MicrosoftGraphErrorResponse {
   error?: {
     code?: string;
     message?: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     innerError?: any;
   };
 }
