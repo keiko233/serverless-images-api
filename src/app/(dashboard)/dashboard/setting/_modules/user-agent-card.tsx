@@ -11,9 +11,9 @@ import {
 import MaterialSymbolsAdd2Rounded from "~icons/material-symbols/add-2-rounded";
 import MaterialSymbolsCloseRounded from "~icons/material-symbols/close-rounded";
 import { useLockFn } from "ahooks";
+import { useAction } from "next-safe-action/hooks";
 import { useDeferredValue, useState } from "react";
 import { toast } from "sonner";
-import { useServerAction } from "zsa-react";
 import { UpsertLegacyUserAgentSetting } from "@/actions/query/schema";
 import { upsertLegacyUserAgentSetting } from "@/actions/query/setting";
 
@@ -53,16 +53,17 @@ export const UserAgentCard = ({
 }) => {
   const [list, setList] = useState<string[]>(defaultValues ?? []);
 
-  const { isPending, execute } = useServerAction(upsertLegacyUserAgentSetting);
+  const { isPending, executeAsync } = useAction(upsertLegacyUserAgentSetting);
 
   const handleClick = useLockFn(async () => {
-    const [, error] = await execute(list);
+    const result = await executeAsync(list);
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success("User Agent updated");
+    if (result.serverError) {
+      toast.error(result.serverError);
+      return;
     }
+
+    toast.success("User Agent updated");
   });
 
   return (

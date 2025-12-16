@@ -14,10 +14,10 @@ import {
   ModalTrigger,
 } from "@libnyanpasu/material-design-react";
 import { useLockFn } from "ahooks";
+import { useAction } from "next-safe-action/hooks";
 import prettyBytes from "pretty-bytes";
 import { PropsWithChildren } from "react";
 import { toast } from "sonner";
-import { useServerAction } from "zsa-react";
 import { updateImageTags } from "@/actions/service/deepdanbooru";
 import { Image } from "@/schema";
 
@@ -38,14 +38,14 @@ const Chip = ({ children }: PropsWithChildren) => (
 );
 
 const UpdateTagButton = ({ image }: { image: Image }) => {
-  const { isPending, execute } = useServerAction(updateImageTags);
+  const { isPending, executeAsync } = useAction(updateImageTags);
 
   const handleClick = useLockFn(async () => {
-    const [, error] = await execute(image);
+    const result = await executeAsync(image);
 
-    if (error) {
-      console.log(error);
-      toast.error(error.message);
+    if (result.serverError) {
+      console.log(result.serverError);
+      toast.error(result.serverError);
     }
   });
 

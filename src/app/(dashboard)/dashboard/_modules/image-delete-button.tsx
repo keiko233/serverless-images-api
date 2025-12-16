@@ -14,15 +14,15 @@ import {
 } from "@libnyanpasu/material-design-react";
 import MaterialSymbolsDeleteForeverRounded from "~icons/material-symbols/delete-forever-rounded";
 import { useLockFn } from "ahooks";
-import { useServerAction } from "zsa-react";
 import { deleteImageById } from "@/actions/query/image";
 import { Image } from "@/schema";
+import { useAction } from "next-safe-action/hooks";
 
 export const ImageDeleteButton = ({ image }: { image: Image }) => {
-  const { execute } = useServerAction(deleteImageById);
+  const { executeAsync } = useAction(deleteImageById);
 
   const handleDelete = useLockFn(async () => {
-    await execute(image.id);
+    await executeAsync(image.id);
   });
 
   return (

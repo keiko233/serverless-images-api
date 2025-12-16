@@ -8,8 +8,8 @@ import {
   CardHeader,
   Input,
 } from "@libnyanpasu/material-design-react";
+import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
-import { useServerAction } from "zsa-react";
 import { UpsertOnedrivePathSetting } from "@/actions/query/schema";
 import { upsertOnedrivePathSetting } from "@/actions/query/setting";
 
@@ -18,7 +18,7 @@ export const OnedrivePathCard = ({
 }: {
   defaultValues: UpsertOnedrivePathSetting | null;
 }) => {
-  const { isPending, execute, error } = useServerAction(
+  const { isPending, executeAsync, result } = useAction(
     upsertOnedrivePathSetting,
   );
 
@@ -35,10 +35,12 @@ export const OnedrivePathCard = ({
 
           const formData = new FormData(form);
 
-          const [, err] = await execute(formData);
+          const result = await executeAsync({
+            path: formData.get("path") as string,
+          });
 
-          if (err) {
-            // handle error
+          if (result.serverError) {
+            toast.error(result.serverError);
             return;
           }
 
@@ -53,7 +55,9 @@ export const OnedrivePathCard = ({
             defaultValue={defaultValues?.path}
           />
 
-          {error?.fieldErrors?.path && <p>{error?.fieldErrors?.path}</p>}
+          {result.validationErrors?.path && (
+            <p>{result.validationErrors?.path._errors?.join(", ")}</p>
+          )}
         </CardContent>
 
         <CardFooter>

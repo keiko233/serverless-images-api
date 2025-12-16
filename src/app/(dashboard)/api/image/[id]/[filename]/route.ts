@@ -19,14 +19,14 @@ export async function GET(
     return new NextResponse("", { status: 404 });
   }
 
-  const [url, error] = await getFile({ id, filename });
+  const result = await getFile({ id, filename });
 
-  if (error) {
-    console.error(error);
+  if (result.serverError || !result.data) {
+    console.error(result.serverError);
     return new Response("", { status: 404 });
   }
 
-  const imageRes = await fetchWithRetry(url);
+  const imageRes = await fetchWithRetry(result.data);
 
   if (!imageRes.ok) {
     return new NextResponse("", { status: 404 });

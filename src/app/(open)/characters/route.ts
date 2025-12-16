@@ -2,18 +2,23 @@ import { NextResponse } from "next/server";
 import { getImageAllCharacter } from "@/actions/query/image";
 
 export async function GET() {
-  const [characters, error] = await getImageAllCharacter();
+  const result = await getImageAllCharacter();
 
-  if (error) {
-    return new NextResponse(JSON.stringify({ error }), {
-      status: 500,
-      headers: {
-        "content-type": "application/json",
+  if (result.serverError) {
+    return new NextResponse(
+      JSON.stringify({
+        error: result.serverError,
+      }),
+      {
+        status: 500,
+        headers: {
+          "content-type": "application/json",
+        },
       },
-    });
+    );
   }
 
-  return new NextResponse(JSON.stringify(characters), {
+  return new NextResponse(JSON.stringify(result.data), {
     headers: {
       "content-type": "application/json",
     },

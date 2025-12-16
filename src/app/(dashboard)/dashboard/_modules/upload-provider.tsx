@@ -43,15 +43,15 @@ export const UploadProvider = ({ children }: PropsWithChildren) => {
       const { name, size, type } = file;
       const arrayBuffer = await file.arrayBuffer();
 
-      const [, error] = await uploadImage({
+      const result = await uploadImage({
         name,
         size,
         type,
         arrayBuffer: arrayBuffer,
       });
 
-      if (error) {
-        toast.error(`Failed to upload: ${formatError(error)}`);
+      if (result.serverError) {
+        toast.error(`Failed to upload: ${formatError(result.serverError)}`);
       }
     }
 

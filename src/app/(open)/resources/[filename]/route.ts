@@ -19,17 +19,17 @@ export async function GET(
     });
   }
 
-  const [url, error] = await getFile(query);
+  const result = await getFile(query);
 
-  if (error) {
-    console.log(error);
+  if (result.serverError || !result.data) {
+    console.log(result.serverError);
 
     return new NextResponse(null, {
       status: 404,
     });
   }
 
-  const res = await fetchWithRetry(url);
+  const res = await fetchWithRetry(result.data);
 
   const buffer = await res.arrayBuffer();
 

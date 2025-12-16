@@ -3,9 +3,9 @@
 import { sql } from "kysely";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { createServerAction } from "zsa";
 import { DEFAULT_CARD_PAGE_SIZE, RANDOM_CHARACTER_KEYWORD } from "@/consts";
 import { getKysely } from "@/lib/kysely";
+import { ac } from "@/lib/safe-action";
 import {
   CreateImageParams,
   GetImagesParams,
@@ -124,9 +124,9 @@ export const upsertImage = async (params: CreateImageParams) => {
   return image;
 };
 
-export const updateImageTagsById = createServerAction()
-  .input(UpdateImageTagsByIdSchema)
-  .handler(async ({ input }) => {
+export const updateImageTagsById = ac
+  .inputSchema(UpdateImageTagsByIdSchema)
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
     const now = new Date().getTime();
@@ -134,19 +134,19 @@ export const updateImageTagsById = createServerAction()
     await kysely
       .updateTable("Image")
       .set({
-        ...input,
+        ...parsedInput,
         updatedAt: now,
       })
-      .where("id", "=", input.id)
+      .where("id", "=", parsedInput.id)
       .execute();
   });
 
-export const deleteImageById = createServerAction()
-  .input(z.string().nonempty())
-  .handler(async ({ input }) => {
+export const deleteImageById = ac
+  .inputSchema(z.string().nonempty())
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
-    await kysely.deleteFrom("Image").where("id", "=", input).execute();
+    await kysely.deleteFrom("Image").where("id", "=", parsedInput).execute();
 
     revalidatePath("/");
   });
@@ -161,7 +161,7 @@ export const getImageById = async (id: string) => {
     .executeTakeFirst();
 };
 
-export const getImageAllCharacter = createServerAction().handler(async () => {
+export const getImageAllCharacter = ac.action(async () => {
   const kysely = await getKysely();
 
   const results = await kysely

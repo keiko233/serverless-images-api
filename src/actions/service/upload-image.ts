@@ -1,15 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createServerAction } from "zsa";
+import { ac } from "@/lib/safe-action";
 import { upsertImage } from "../query/image";
 import { uploadFile } from "./onedrive";
 import { ImageUploadSchema } from "./schema";
 
-export const uploadImage = createServerAction()
-  .input(ImageUploadSchema)
-  .handler(async ({ input }) => {
-    const { name, size, arrayBuffer } = input;
+export const uploadImage = ac
+  .inputSchema(ImageUploadSchema)
+  .action(async ({ parsedInput }) => {
+    const { name, size, arrayBuffer } = parsedInput;
 
     const [, format] = name.split(".");
 

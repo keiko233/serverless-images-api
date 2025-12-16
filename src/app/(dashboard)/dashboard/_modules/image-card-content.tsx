@@ -89,13 +89,13 @@ export const ImageCardContent = ({
   const { data, isLoading } = useSWR(
     `/image-cache/${image.id}`,
     async () => {
-      const [url] = await getFile(image);
+      const result = await getFile(image);
 
-      if (!url) {
+      if (result.serverError || !result.data) {
         return null;
       }
 
-      const res = await fetchWithRetry(url);
+      const res = await fetchWithRetry(result.data);
 
       return URL.createObjectURL(await res.blob());
     },

@@ -9,6 +9,7 @@ import {
 import { getRequestRecords } from "@/actions/query/request";
 import { GetRequestParams } from "@/actions/query/schema";
 import { Pagination } from "@/components/pagination";
+import { formatError } from "@/utils/fmt";
 import { ParamsCard } from "./_modules/params-card";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +28,12 @@ export default async function Page({
     direction,
   };
 
-  const [result] = await getRequestRecords(params);
+  const result = await getRequestRecords(params);
+
+  if (result.serverError || !result.data) {
+    console.error(result.serverError);
+    return <div>Error: {formatError(result.serverError)}</div>;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -49,7 +55,7 @@ export default async function Page({
         </TableHeader>
 
         <TableBody>
-          {result?.requests.map((request) => (
+          {result.data.requests.map((request) => (
             <TableRow key={request.id}>
               <TableCell className="font-mono">{request.ipAddress}</TableCell>
 
@@ -75,10 +81,10 @@ export default async function Page({
         </TableBody>
       </Table>
 
-      {result && (
+      {result.data && (
         <Pagination
           className="py-4"
-          pagination={result.pagination}
+          pagination={result.data.pagination}
           searchParams={params}
         />
       )}

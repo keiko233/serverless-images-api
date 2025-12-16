@@ -1,7 +1,7 @@
 "use server";
 
-import { createServerAction } from "zsa";
 import { OnedriveService } from "@/lib/onedrive";
+import { ac } from "@/lib/safe-action";
 import { ImageSchema } from "@/schema";
 import { getOnedrivePathSetting, getOnedriveSetting } from "../query/setting";
 
@@ -41,9 +41,9 @@ export const uploadFile = async (fileBuffer: Buffer, filename: string) => {
   }
 };
 
-export const getFile = createServerAction()
-  .input(ImageSchema.pick({ id: true, filename: true }))
-  .handler(async ({ input }) => {
+export const getFile = ac
+  .inputSchema(ImageSchema.pick({ id: true, filename: true }))
+  .action(async ({ parsedInput }) => {
     const client = await getOnedriveClient();
 
     const path = await getOnedrivePathSetting();
@@ -54,9 +54,11 @@ export const getFile = createServerAction()
       );
     }
 
-    const [, format] = input.filename.split(".");
+    const [, format] = parsedInput.filename.split(".");
 
-    const result = await client.getLink(`${path.value}/${input.id}.${format}`);
+    const result = await client.getLink(
+      `${path.value}/${parsedInput.id}.${format}`,
+    );
 
     if (!result) {
       throw new Error("Failed to get file");

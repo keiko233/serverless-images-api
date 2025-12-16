@@ -81,11 +81,14 @@ export const UpdateCurrentPageImageTagsButton = ({
     for (let i = 0; i < filtedImages.length; i++) {
       try {
         const current = filtedImages[i];
-        const [, error] = await updateImageTags(current);
+        const result = await updateImageTags(current);
 
-        if (error) {
+        if (result.serverError) {
           failedCount++;
-          console.error(`Error updating tags for image ${current.id}:`, error);
+          console.error(
+            `Error updating tags for image ${current.id}:`,
+            result.serverError,
+          );
           toast.error(`Failed to update image ${current.id} tags`);
         }
       } finally {

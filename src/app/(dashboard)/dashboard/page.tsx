@@ -2,6 +2,7 @@ import { cn } from "@libnyanpasu/material-design-libs";
 import { getImageAllCharacter, getImages } from "@/actions/query/image";
 import { GetImagesParams } from "@/actions/query/schema";
 import { Pagination } from "@/components/pagination";
+import { formatError } from "@/utils/fmt";
 import { FloatButtons } from "./_modules/float-buttons";
 import { ImageCard, ImageCardType } from "./_modules/image-card";
 import { QueryForm } from "./_modules/query-form";
@@ -38,7 +39,14 @@ export default async function Page({
 
   const { images, pagination } = await getImages(params);
 
-  const [characters] = await getImageAllCharacter();
+  const result = await getImageAllCharacter();
+
+  if (result.serverError || !result.data) {
+    console.error(result.serverError);
+    return <div>Error: {formatError(result.serverError)}</div>;
+  }
+
+  const characters = result.data;
 
   return (
     <UploadProvider>

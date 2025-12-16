@@ -2,9 +2,9 @@
 
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { ExpressionBuilder } from "kysely";
-import { createServerAction } from "zsa";
 import { DEFAULT_PAGE_SIZE } from "@/consts";
 import { getKysely } from "@/lib/kysely";
+import { ac } from "@/lib/safe-action";
 import { Database } from "@/schema";
 import { GetRequestRecords } from "./schema";
 
@@ -38,19 +38,21 @@ export const checkAndRecordRequest = async (params: {
   return true;
 };
 
-export const getRequestRecords = createServerAction()
-  .input(GetRequestRecords)
-  .handler(async ({ input }) => {
+export const getRequestRecords = ac
+  .inputSchema(GetRequestRecords)
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
-    const page = Number(input?.page) || 1;
-    const limit = Number(input?.limit) || DEFAULT_PAGE_SIZE;
+    const page = Number(parsedInput?.page) || 1;
+    const limit = Number(parsedInput?.limit) || DEFAULT_PAGE_SIZE;
     const offset = (page - 1) * limit;
 
     const searchCondition = (eb: ExpressionBuilder<Database, "Request">) => {
-      if (!input?.search) return eb.val(true);
+      if (!parsedInput?.search) {
+        return eb.val(true);
+      }
 
-      const searchTerm = `%${input.search}%`;
+      const searchTerm = `%${parsedInput.search}%`;
       return eb.or([
         eb("ipAddress", "like", searchTerm),
         eb("asn", "like", searchTerm),
@@ -70,7 +72,7 @@ export const getRequestRecords = createServerAction()
         .selectAll()
         .limit(limit)
         .offset(offset)
-        .orderBy("createdAt", input.direction || "desc")
+        .orderBy("createdAt", parsedInput.direction || "desc")
         .execute(),
 
       kysely

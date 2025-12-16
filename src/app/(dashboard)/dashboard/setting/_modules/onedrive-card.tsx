@@ -8,8 +8,8 @@ import {
   CardHeader,
   Input,
 } from "@libnyanpasu/material-design-react";
+import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
-import { useServerAction } from "zsa-react";
 import { upsertOnedriveSetting } from "@/actions/query/setting";
 import { OnedriveConfig } from "@/lib/onedrive";
 
@@ -18,7 +18,7 @@ export const OnedriveCard = ({
 }: {
   defaultValues: OnedriveConfig | null;
 }) => {
-  const { isPending, execute, error } = useServerAction(upsertOnedriveSetting);
+  const { isPending, executeAsync, result } = useAction(upsertOnedriveSetting);
 
   return (
     <Card className="break-inside-avoid">
@@ -33,10 +33,15 @@ export const OnedriveCard = ({
 
           const formData = new FormData(form);
 
-          const [, err] = await execute(formData);
+          const result = await executeAsync({
+            clientID: formData.get("clientID") as string,
+            clientSecret: formData.get("clientSecret") as string,
+            tenantID: formData.get("tenantID") as string,
+            userEmail: formData.get("userEmail") as string,
+          });
 
-          if (err) {
-            // handle error
+          if (result.serverError) {
+            toast.error(result.serverError);
             return;
           }
 
@@ -51,8 +56,8 @@ export const OnedriveCard = ({
             defaultValue={defaultValues?.clientID}
           />
 
-          {error?.fieldErrors?.clientID && (
-            <p>{error?.fieldErrors?.clientID}</p>
+          {result.validationErrors?.clientID && (
+            <p>{result.validationErrors?.clientID._errors?.join(", ")}</p>
           )}
 
           <Input
@@ -62,8 +67,8 @@ export const OnedriveCard = ({
             defaultValue={defaultValues?.clientSecret}
           />
 
-          {error?.fieldErrors?.clientSecret && (
-            <p>{error?.fieldErrors?.clientSecret}</p>
+          {result.validationErrors?.clientSecret && (
+            <p>{result.validationErrors?.clientSecret._errors?.join(", ")}</p>
           )}
 
           <Input
@@ -73,8 +78,8 @@ export const OnedriveCard = ({
             defaultValue={defaultValues?.tenantID}
           />
 
-          {error?.fieldErrors?.tenantID && (
-            <p>{error?.fieldErrors?.tenantID}</p>
+          {result.validationErrors?.tenantID && (
+            <p>{result.validationErrors?.tenantID._errors?.join(", ")}</p>
           )}
 
           <Input
@@ -84,8 +89,8 @@ export const OnedriveCard = ({
             defaultValue={defaultValues?.userEmail}
           />
 
-          {error?.fieldErrors?.userEmail && (
-            <p>{error?.fieldErrors?.userEmail}</p>
+          {result.validationErrors?.userEmail && (
+            <p>{result.validationErrors?.userEmail._errors?.join(", ")}</p>
           )}
         </CardContent>
 

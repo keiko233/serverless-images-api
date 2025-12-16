@@ -1,6 +1,5 @@
 "use server";
 
-import { createServerAction } from "zsa";
 import {
   SETTING_LEGACY_USER_AGENT_KEY,
   SETTING_ONEDRIVE_KEY,
@@ -8,6 +7,7 @@ import {
 } from "@/consts";
 import { getKysely } from "@/lib/kysely";
 import { OnedriveConfig, OnedriveConfigSchema } from "@/lib/onedrive";
+import { ac } from "@/lib/safe-action";
 import {
   UpsertLegacyUserAgentSetting,
   UpsertLegacyUserAgentSettingSchema,
@@ -41,14 +41,12 @@ export const getOnedriveSetting = async (options?: { withRaw?: boolean }) => {
   };
 };
 
-export const upsertOnedriveSetting = createServerAction()
-  .input(OnedriveConfigSchema, {
-    type: "formData",
-  })
-  .handler(async ({ input }) => {
+export const upsertOnedriveSetting = ac
+  .inputSchema(OnedriveConfigSchema)
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
-    const value = JSON.stringify(input);
+    const value = JSON.stringify(parsedInput);
 
     const id = crypto.randomUUID();
 
@@ -84,11 +82,9 @@ export const getOnedrivePathSetting = async () => {
   return result;
 };
 
-export const upsertOnedrivePathSetting = createServerAction()
-  .input(UpsertOnedrivePathSettingSchema, {
-    type: "formData",
-  })
-  .handler(async ({ input }) => {
+export const upsertOnedrivePathSetting = ac
+  .inputSchema(UpsertOnedrivePathSettingSchema)
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
     const id = crypto.randomUUID();
@@ -98,11 +94,13 @@ export const upsertOnedrivePathSetting = createServerAction()
       .values({
         id,
         key: SETTING_ONEDRIVE_PATH_KEY,
-        value: input.path,
+        value: parsedInput.path,
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime(),
       })
-      .onConflict((oc) => oc.column("key").doUpdateSet({ value: input.path }))
+      .onConflict((oc) =>
+        oc.column("key").doUpdateSet({ value: parsedInput.path }),
+      )
       .returning("id")
       .executeTakeFirstOrThrow();
 
@@ -122,7 +120,7 @@ export const getLegacyUserAgentSetting = async () => {
     return null;
   }
 
-  const value = JSON.parse(result.value) as UpsertLegacyUserAgentSetting
+  const value = JSON.parse(result.value) as UpsertLegacyUserAgentSetting;
 
   return {
     ...result,
@@ -130,14 +128,14 @@ export const getLegacyUserAgentSetting = async () => {
   };
 };
 
-export const upsertLegacyUserAgentSetting = createServerAction()
-  .input(UpsertLegacyUserAgentSettingSchema)
-  .handler(async ({ input }) => {
+export const upsertLegacyUserAgentSetting = ac
+  .inputSchema(UpsertLegacyUserAgentSettingSchema)
+  .action(async ({ parsedInput }) => {
     const kysely = await getKysely();
 
     const id = crypto.randomUUID();
 
-    const value = JSON.stringify(input);
+    const value = JSON.stringify(parsedInput);
 
     const result = await kysely
       .insertInto("Setting")

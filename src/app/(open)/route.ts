@@ -69,9 +69,9 @@ export async function GET(request: NextRequest) {
 
     // return base64 image
     if (method === Method.Base64) {
-      const [url, error] = await getFile(query);
+      const result = await getFile(query);
 
-      if (error) {
+      if (result.serverError || !result.data) {
         return new NextResponse(
           JSON.stringify({
             message: "Failed to get image",
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const res = await fetchWithRetry(url);
+      const res = await fetchWithRetry(result.data);
       const arrayBuffer = await res.arrayBuffer();
 
       const base64 = Buffer.from(arrayBuffer).toString("base64");

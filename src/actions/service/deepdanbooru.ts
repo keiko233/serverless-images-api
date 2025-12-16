@@ -1,24 +1,24 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createServerAction } from "zsa";
 import { DeepDanbooru } from "@/lib/deepdanbooru";
+import { ac } from "@/lib/safe-action";
 import { ImageSchema } from "@/schema";
 import { formatError } from "@/utils/fmt";
 import { fetchWithRetry } from "@/utils/retry";
 import { updateImageTagsById } from "../query/image";
 import { getFile } from "./onedrive";
 
-export const updateImageTags = createServerAction()
-  .input(ImageSchema.pick({ id: true, filename: true }))
-  .handler(async ({ input }) => {
-    const [url, error] = await getFile(input);
+export const updateImageTags = ac
+  .inputSchema(ImageSchema.pick({ id: true, filename: true }))
+  .action(async ({ parsedInput }) => {
+    const result = await getFile(parsedInput);
 
-    if (error) {
-      throw new Error(formatError(error));
+    if (result.serverError || !result.data) {
+      throw new Error(formatError(result.serverError));
     }
 
-    const res = await fetchWithRetry(url);
+    const res = await fetchWithRetry(result.data);
 
     const buffer = await res.arrayBuffer();
 
@@ -27,7 +27,7 @@ export const updateImageTags = createServerAction()
     const { tags, character } = await deepDanbooru.getTag();
 
     await updateImageTagsById({
-      id: input.id,
+      id: parsedInput.id,
       character: character?.name ?? null,
       aliases: character?.words?.join(",") ?? null,
       tags: tags.map(({ tag }) => tag).join(",") ?? null,
