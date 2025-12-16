@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 export function formatError(err: unknown): string {
   if (err instanceof Error) {
     if (err instanceof ZodError) {
-      return err.errors
+      return err.issues
         .map((e) => `${e.path.join(".")}: ${e.message}`)
         .join("; ");
     }
@@ -14,13 +14,12 @@ export function formatError(err: unknown): string {
   if (
     err &&
     typeof err === "object" &&
-    "errors" in err &&
-    Array.isArray(err.errors)
+    "issues" in err &&
+    Array.isArray((err as any).issues)
   ) {
     try {
-      return err.errors
+      return (err as any).issues
         .map(
-           
           (e: any) =>
             `${e.path?.join?.(".") || "unknown"}: ${e.message || "Invalid value"}`,
         )

@@ -17,6 +17,8 @@ import Image from "next/image";
 import { ComponentProps, PropsWithChildren, useMemo, useState } from "react";
 import useSWR from "swr";
 
+export const dynamic = "force-dynamic";
+
 const getCodeTemplate = (url: string) => {
   return `const response = await fetch("${url}");
 const data = await response.json();
@@ -117,6 +119,10 @@ export default function Page() {
   const [responseType, setResponseType] = useState<string>();
 
   const responseUrl = useMemo(() => {
+    if (typeof window === "undefined") {
+      return "";
+    }
+
     const searchParams = new URLSearchParams();
 
     if (character) {
@@ -171,7 +177,11 @@ export default function Page() {
 
           <div>Get Characters API</div>
 
-          <CodeBox>{`${window.location.origin}/characters`}</CodeBox>
+          <CodeBox>
+            {typeof window !== "undefined"
+              ? `${window.location.origin}/characters`
+              : "/characters"}
+          </CodeBox>
 
           <SelectInner
             placeholder="Response Type"

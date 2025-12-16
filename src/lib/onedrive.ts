@@ -202,7 +202,7 @@ export class OnedriveService {
           Authorization: `Bearer ${this.msAuth?.access_token}`,
           "Content-Type": "application/octet-stream",
         },
-        body: fileBuffer,
+        body: new Uint8Array(fileBuffer),
       });
 
       if (!response.ok) {
