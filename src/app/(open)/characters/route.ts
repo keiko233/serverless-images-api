@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { getImageAllCharacter } from "@/actions/query/image";
 
-export const runtime = "edge";
-
 export async function GET() {
   const [characters, error] = await getImageAllCharacter();
 

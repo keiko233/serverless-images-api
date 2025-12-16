@@ -8,8 +8,6 @@ import { OnedriveCard } from "./_modules/onedrive-card";
 import { OnedrivePathCard } from "./_modules/onedrive-path-card";
 import { UserAgentCard } from "./_modules/user-agent-card";
 
-export const runtime = "edge";
-
 export const dynamic = "force-dynamic";
 
 export default async function Page() {

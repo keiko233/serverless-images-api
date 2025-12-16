@@ -5,8 +5,6 @@ import {
 } from "@libnyanpasu/material-design-react";
 import { GitHub } from "./_modules/github";
 
-export const runtime = "edge";
-
 export default async function Page() {
   return (
     <Card className="w-96">

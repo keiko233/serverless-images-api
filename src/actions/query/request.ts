@@ -1,6 +1,6 @@
 "use server";
 
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { ExpressionBuilder } from "kysely";
 import { createServerAction } from "zsa";
 import { DEFAULT_PAGE_SIZE } from "@/consts";
@@ -18,7 +18,7 @@ export const checkAndRecordRequest = async (params: {
 
   const id = crypto.randomUUID();
 
-  const { cf } = getRequestContext();
+  const { cf } = await getCloudflareContext({ async: true });
 
   // TODO: limit the number of requests from the same IP address
   await kysely
@@ -26,10 +26,10 @@ export const checkAndRecordRequest = async (params: {
     .values({
       id,
       ...params,
-      country: cf.country,
-      city: cf.city,
-      region: cf.region,
-      asn: String(cf.asn),
+      country: cf?.country,
+      city: cf?.city,
+      region: cf?.region,
+      asn: cf?.asn ? String(cf.asn) : null,
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
     })

@@ -3,8 +3,6 @@ import { getFile } from "@/actions/service/onedrive";
 import { getSession } from "@/lib/auth";
 import { fetchWithRetry } from "@/utils/retry";
 
-export const runtime = "edge";
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string; filename: string }> },

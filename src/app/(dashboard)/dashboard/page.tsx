@@ -7,8 +7,6 @@ import { ImageCard, ImageCardType } from "./_modules/image-card";
 import { QueryForm } from "./_modules/query-form";
 import { UploadProvider } from "./_modules/upload-provider";
 
-export const runtime = "edge";
-
 export const dynamic = "force-dynamic";
 
 export type PageSearchParams = GetImagesParams & {

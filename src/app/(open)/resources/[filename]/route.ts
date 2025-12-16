@@ -3,8 +3,6 @@ import { getImageById } from "@/actions/query/image";
 import { getFile } from "@/actions/service/onedrive";
 import { fetchWithRetry } from "@/utils/retry";
 
-export const runtime = "edge";
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ filename: string }> },

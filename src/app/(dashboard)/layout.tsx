@@ -6,8 +6,6 @@ import { NavbarAside } from "./_modules/navbar-aside";
 import { NavbarMenu } from "./_modules/navbar-menu";
 import { NavbarProvider } from "./_modules/navbar-provider";
 
-export const runtime = "edge";
-
 export const dynamic = "force-dynamic";
 
 export default async function Layout({

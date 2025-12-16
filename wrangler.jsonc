@@ -1,20 +1,23 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "serverless-images-api",
+  "main": ".open-next/worker.js",
   "compatibility_date": "2025-03-11",
-  "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": ".vercel/output/static",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "placement": {
-    "mode": "smart"
+    "mode": "smart",
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "serverless-images-api",
-      "database_id": "1cca4364-0068-40da-8bd4-f6a7ea0f2b64"
-    }
-  ]
+      "database_id": "1cca4364-0068-40da-8bd4-f6a7ea0f2b64",
+    },
+  ],
 }

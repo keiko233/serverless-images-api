@@ -1,7 +1,5 @@
 import { Container } from "@/components/container";
 
-export const runtime = "edge";
-
 export default async function Layout({
   children,
 }: Readonly<{

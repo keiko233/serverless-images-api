@@ -7,8 +7,6 @@ import { Image } from "@/schema";
 import { formatError } from "@/utils/fmt";
 import { fetchWithRetry } from "@/utils/retry";
 
-export const runtime = "edge";
-
 enum Method {
   JSON = "json",
   Base64 = "base",

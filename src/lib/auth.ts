@@ -1,4 +1,4 @@
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins";
@@ -7,7 +7,7 @@ import { UserRole } from "@/schema";
 import { getKysely } from "./kysely";
 
 export const getAuth = async () => {
-  const { env } = getRequestContext();
+  const { env } = await getCloudflareContext({ async: true });
 
   return betterAuth({
     database: {

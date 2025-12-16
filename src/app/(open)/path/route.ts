@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { getImageAllCharacter } from "@/actions/query/image";
 import { RANDOM_CHARACTER_KEYWORD } from "@/consts";
 
-export const runtime = "edge";
-
 // Compatibility with old API
 export async function GET() {
   const [characters, error] = await getImageAllCharacter();
