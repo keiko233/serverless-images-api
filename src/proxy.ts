@@ -20,10 +20,13 @@ function handleCORS(request: NextRequest, response: NextResponse) {
   return response;
 }
 
-export default async function authMiddleware(request: NextRequest) {
+export default async function authProxy(request: NextRequest) {
   // FIXME: https://github.com/cloudflare/next-on-pages/issues/954
   // ref: https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw
-  if (request.headers.has("x-middleware-subrequest")) {
+  if (
+    request.headers.has("x-middleware-subrequest") ||
+    request.headers.has("x-proxy-subrequest")
+  ) {
     return new Response("Unauthorized", { status: 401 });
   }
 
