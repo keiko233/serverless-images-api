@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS "Request" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "ipAddress" TEXT NOT NULL,
+    "endpoint" TEXT,
+    "userAgent" TEXT,
+    "method" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
