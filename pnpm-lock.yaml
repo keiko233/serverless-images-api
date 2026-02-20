@@ -68,7 +68,7 @@ importers:
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20250312.0
-        version: 4.20260117.0
+        version: 4.20260227.0
       '@commitlint/cli':
         specifier: ^20.0.0
         version: 20.3.1(@types/node@24.10.9)(typescript@5.9.3)
@@ -83,7 +83,7 @@ importers:
         version: 4.7.0(prettier@3.8.1)
       '@opennextjs/cloudflare':
         specifier: ^1.14.6
-        version: 1.14.9(next@16.1.5(@babel/core@7.27.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.59.2(@cloudflare/workers-types@4.20260117.0))
+        version: 1.14.9(next@16.1.5(@babel/core@7.27.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.59.2(@cloudflare/workers-types@4.20260227.0))
       '@tailwindcss/postcss':
         specifier: ^4.0.13
         version: 4.1.18
@@ -137,7 +137,7 @@ importers:
         version: 23.0.1(@svgr/core@8.1.0(typescript@5.9.3))
       wrangler:
         specifier: ^4.0.0
-        version: 4.59.2(@cloudflare/workers-types@4.20260117.0)
+        version: 4.59.2(@cloudflare/workers-types@4.20260227.0)
 
 packages:
 
@@ -640,8 +640,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20260117.0':
-    resolution: {integrity: sha512-hAoNGDHRv+BaMJEFx5Zl5B2nzDW0+fa9aocIjUxhBGAZlXpGXhogK2lxtzJ7G8GzrgfXv8VRMA0n+H3OTgsiHQ==}
+  '@cloudflare/workers-types@4.20260227.0':
+    resolution: {integrity: sha512-e/Lfx2LGmmTds9Soorj96ER+xzJZ/dfNcSd+odlRDv0HBYA4Ts7m01A1VwCPGvuy3/kQo7FYZEQdF6vnR0y73A==}
 
   '@commitlint/cli@20.3.1':
     resolution: {integrity: sha512-NtInjSlyev/+SLPvx/ulz8hRE25Wf5S9dLNDcIwazq0JyB4/w1ROF/5nV0ObPTX8YpRaKYeKtXDYWqumBNHWsw==}
@@ -3612,6 +3612,7 @@ packages:
   glob@9.3.5:
     resolution: {integrity: sha512-e1LleDykUz2Iu+MTYdkSsuWX8lvAjAcs0Xef0lNIu0S2wOAzuTxCJtcd9S3cijlwYF18EsU3rzb8jPVobxDh9Q==}
     engines: {node: '>=16 || 14 >=14.17'}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-directory@4.0.1:
     resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
@@ -6400,7 +6401,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260114.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20260117.0': {}
+  '@cloudflare/workers-types@4.20260227.0': {}
 
   '@commitlint/cli@20.3.1(@types/node@24.10.9)(typescript@5.9.3)':
     dependencies:
@@ -7177,7 +7178,7 @@ snapshots:
       - aws-crt
       - supports-color
 
-  '@opennextjs/cloudflare@1.14.9(next@16.1.5(@babel/core@7.27.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.59.2(@cloudflare/workers-types@4.20260117.0))':
+  '@opennextjs/cloudflare@1.14.9(next@16.1.5(@babel/core@7.27.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(wrangler@4.59.2(@cloudflare/workers-types@4.20260227.0))':
     dependencies:
       '@ast-grep/napi': 0.40.0
       '@dotenvx/dotenvx': 1.31.0
@@ -7187,7 +7188,7 @@ snapshots:
       glob: 12.0.0
       next: 16.1.5(@babel/core@7.27.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       ts-tqdm: 0.8.6
-      wrangler: 4.59.2(@cloudflare/workers-types@4.20260117.0)
+      wrangler: 4.59.2(@cloudflare/workers-types@4.20260227.0)
       yargs: 18.0.0
     transitivePeerDependencies:
       - aws-crt
@@ -11056,7 +11057,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260114.0
       '@cloudflare/workerd-windows-64': 1.20260114.0
 
-  wrangler@4.59.2(@cloudflare/workers-types@4.20260117.0):
+  wrangler@4.59.2(@cloudflare/workers-types@4.20260227.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@cloudflare/unenv-preset': 2.10.0(unenv@2.0.0-rc.24)(workerd@1.20260114.0)
@@ -11067,7 +11068,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260114.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20260117.0
+      '@cloudflare/workers-types': 4.20260227.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
