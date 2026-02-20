@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS "Image" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "filename" TEXT NOT NULL UNIQUE,
+    "size" INTEGER NOT NULL,
+    "tags" TEXT,
+    "character" TEXT,
+    "aliases" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

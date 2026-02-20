@@ -1,0 +1,4 @@
+ALTER TABLE "Request" ADD COLUMN "country" TEXT;
+ALTER TABLE "Request" ADD COLUMN "city" TEXT;
+ALTER TABLE "Request" ADD COLUMN "region" TEXT;
+ALTER TABLE "Request" ADD COLUMN "asn" TEXT;
