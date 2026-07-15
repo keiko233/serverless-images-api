@@ -10,12 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as staticIndexRouteImport } from './routes/(static)/index'
-import { Route as staticPathRouteImport } from './routes/(static)/path'
-import { Route as staticCharactersRouteImport } from './routes/(static)/characters'
-import { Route as staticPlaygroundRouteRouteImport } from './routes/(static)/playground/route'
+import { Route as staticSplatRouteImport } from './routes/(static)/$'
 import { Route as dashboardDashboardRouteRouteImport } from './routes/(dashboard)/dashboard/route'
 import { Route as dashboardAuthRouteRouteImport } from './routes/(dashboard)/auth/route'
-import { Route as staticPlaygroundIndexRouteImport } from './routes/(static)/playground/index'
 import { Route as dashboardDashboardIndexRouteImport } from './routes/(dashboard)/dashboard/index'
 import { Route as dashboardAuthIndexRouteImport } from './routes/(dashboard)/auth/index'
 import { Route as staticResourcesFilenameRouteImport } from './routes/(static)/resources/$filename'
@@ -30,19 +27,9 @@ const staticIndexRoute = staticIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const staticPathRoute = staticPathRouteImport.update({
-  id: '/(static)/path',
-  path: '/path',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const staticCharactersRoute = staticCharactersRouteImport.update({
-  id: '/(static)/characters',
-  path: '/characters',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const staticPlaygroundRouteRoute = staticPlaygroundRouteRouteImport.update({
-  id: '/(static)/playground',
-  path: '/playground',
+const staticSplatRoute = staticSplatRouteImport.update({
+  id: '/(static)/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const dashboardDashboardRouteRoute = dashboardDashboardRouteRouteImport.update({
@@ -54,11 +41,6 @@ const dashboardAuthRouteRoute = dashboardAuthRouteRouteImport.update({
   id: '/(dashboard)/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
-} as any)
-const staticPlaygroundIndexRoute = staticPlaygroundIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => staticPlaygroundRouteRoute,
 } as any)
 const dashboardDashboardIndexRoute = dashboardDashboardIndexRouteImport.update({
   id: '/',
@@ -107,29 +89,24 @@ const dashboardApiImageIdFilenameRoute =
 export interface FileRoutesByFullPath {
   '/auth': typeof dashboardAuthRouteRouteWithChildren
   '/dashboard': typeof dashboardDashboardRouteRouteWithChildren
-  '/playground': typeof staticPlaygroundRouteRouteWithChildren
-  '/characters': typeof staticCharactersRoute
-  '/path': typeof staticPathRoute
+  '/$': typeof staticSplatRoute
   '/': typeof staticIndexRoute
   '/resources/$': typeof staticResourcesSplatRoute
   '/resources/$filename': typeof staticResourcesFilenameRoute
   '/auth/': typeof dashboardAuthIndexRoute
   '/dashboard/': typeof dashboardDashboardIndexRoute
-  '/playground/': typeof staticPlaygroundIndexRoute
   '/api/auth/$': typeof dashboardApiAuthSplatRoute
   '/dashboard/request/': typeof dashboardDashboardRequestIndexRoute
   '/dashboard/settings/': typeof dashboardDashboardSettingsIndexRoute
   '/api/image/$id/$filename': typeof dashboardApiImageIdFilenameRoute
 }
 export interface FileRoutesByTo {
-  '/characters': typeof staticCharactersRoute
-  '/path': typeof staticPathRoute
+  '/$': typeof staticSplatRoute
   '/': typeof staticIndexRoute
   '/resources/$': typeof staticResourcesSplatRoute
   '/resources/$filename': typeof staticResourcesFilenameRoute
   '/auth': typeof dashboardAuthIndexRoute
   '/dashboard': typeof dashboardDashboardIndexRoute
-  '/playground': typeof staticPlaygroundIndexRoute
   '/api/auth/$': typeof dashboardApiAuthSplatRoute
   '/dashboard/request': typeof dashboardDashboardRequestIndexRoute
   '/dashboard/settings': typeof dashboardDashboardSettingsIndexRoute
@@ -139,15 +116,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(dashboard)/auth': typeof dashboardAuthRouteRouteWithChildren
   '/(dashboard)/dashboard': typeof dashboardDashboardRouteRouteWithChildren
-  '/(static)/playground': typeof staticPlaygroundRouteRouteWithChildren
-  '/(static)/characters': typeof staticCharactersRoute
-  '/(static)/path': typeof staticPathRoute
+  '/(static)/$': typeof staticSplatRoute
   '/(static)/': typeof staticIndexRoute
   '/(static)/resources/$': typeof staticResourcesSplatRoute
   '/(static)/resources/$filename': typeof staticResourcesFilenameRoute
   '/(dashboard)/auth/': typeof dashboardAuthIndexRoute
   '/(dashboard)/dashboard/': typeof dashboardDashboardIndexRoute
-  '/(static)/playground/': typeof staticPlaygroundIndexRoute
   '/(dashboard)/api/auth/$': typeof dashboardApiAuthSplatRoute
   '/(dashboard)/dashboard/request/': typeof dashboardDashboardRequestIndexRoute
   '/(dashboard)/dashboard/settings/': typeof dashboardDashboardSettingsIndexRoute
@@ -158,29 +132,24 @@ export interface FileRouteTypes {
   fullPaths:
     | '/auth'
     | '/dashboard'
-    | '/playground'
-    | '/characters'
-    | '/path'
+    | '/$'
     | '/'
     | '/resources/$'
     | '/resources/$filename'
     | '/auth/'
     | '/dashboard/'
-    | '/playground/'
     | '/api/auth/$'
     | '/dashboard/request/'
     | '/dashboard/settings/'
     | '/api/image/$id/$filename'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/characters'
-    | '/path'
+    | '/$'
     | '/'
     | '/resources/$'
     | '/resources/$filename'
     | '/auth'
     | '/dashboard'
-    | '/playground'
     | '/api/auth/$'
     | '/dashboard/request'
     | '/dashboard/settings'
@@ -189,15 +158,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/(dashboard)/auth'
     | '/(dashboard)/dashboard'
-    | '/(static)/playground'
-    | '/(static)/characters'
-    | '/(static)/path'
+    | '/(static)/$'
     | '/(static)/'
     | '/(static)/resources/$'
     | '/(static)/resources/$filename'
     | '/(dashboard)/auth/'
     | '/(dashboard)/dashboard/'
-    | '/(static)/playground/'
     | '/(dashboard)/api/auth/$'
     | '/(dashboard)/dashboard/request/'
     | '/(dashboard)/dashboard/settings/'
@@ -207,9 +173,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   dashboardAuthRouteRoute: typeof dashboardAuthRouteRouteWithChildren
   dashboardDashboardRouteRoute: typeof dashboardDashboardRouteRouteWithChildren
-  staticPlaygroundRouteRoute: typeof staticPlaygroundRouteRouteWithChildren
-  staticCharactersRoute: typeof staticCharactersRoute
-  staticPathRoute: typeof staticPathRoute
+  staticSplatRoute: typeof staticSplatRoute
   staticIndexRoute: typeof staticIndexRoute
   staticResourcesSplatRoute: typeof staticResourcesSplatRoute
   staticResourcesFilenameRoute: typeof staticResourcesFilenameRoute
@@ -226,25 +190,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof staticIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(static)/path': {
-      id: '/(static)/path'
-      path: '/path'
-      fullPath: '/path'
-      preLoaderRoute: typeof staticPathRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(static)/characters': {
-      id: '/(static)/characters'
-      path: '/characters'
-      fullPath: '/characters'
-      preLoaderRoute: typeof staticCharactersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(static)/playground': {
-      id: '/(static)/playground'
-      path: '/playground'
-      fullPath: '/playground'
-      preLoaderRoute: typeof staticPlaygroundRouteRouteImport
+    '/(static)/$': {
+      id: '/(static)/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof staticSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(dashboard)/dashboard': {
@@ -260,13 +210,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof dashboardAuthRouteRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/(static)/playground/': {
-      id: '/(static)/playground/'
-      path: '/'
-      fullPath: '/playground/'
-      preLoaderRoute: typeof staticPlaygroundIndexRouteImport
-      parentRoute: typeof staticPlaygroundRouteRoute
     }
     '/(dashboard)/dashboard/': {
       id: '/(dashboard)/dashboard/'
@@ -356,25 +299,10 @@ const dashboardDashboardRouteRouteWithChildren =
     dashboardDashboardRouteRouteChildren,
   )
 
-interface staticPlaygroundRouteRouteChildren {
-  staticPlaygroundIndexRoute: typeof staticPlaygroundIndexRoute
-}
-
-const staticPlaygroundRouteRouteChildren: staticPlaygroundRouteRouteChildren = {
-  staticPlaygroundIndexRoute: staticPlaygroundIndexRoute,
-}
-
-const staticPlaygroundRouteRouteWithChildren =
-  staticPlaygroundRouteRoute._addFileChildren(
-    staticPlaygroundRouteRouteChildren,
-  )
-
 const rootRouteChildren: RootRouteChildren = {
   dashboardAuthRouteRoute: dashboardAuthRouteRouteWithChildren,
   dashboardDashboardRouteRoute: dashboardDashboardRouteRouteWithChildren,
-  staticPlaygroundRouteRoute: staticPlaygroundRouteRouteWithChildren,
-  staticCharactersRoute: staticCharactersRoute,
-  staticPathRoute: staticPathRoute,
+  staticSplatRoute: staticSplatRoute,
   staticIndexRoute: staticIndexRoute,
   staticResourcesSplatRoute: staticResourcesSplatRoute,
   staticResourcesFilenameRoute: staticResourcesFilenameRoute,
