@@ -78,18 +78,18 @@ export default function EditTagsDialog({
         className="fixed inset-0 bg-black/50 backdrop-blur-xs"
         onClick={onClose}
       />
-      <div className="relative z-50 w-full max-w-md overflow-hidden rounded-2xl border bg-background shadow-2xl">
+      <div className="bg-background relative z-50 w-full max-w-md overflow-hidden rounded-2xl border shadow-2xl">
         <div className="flex items-center justify-between border-b px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold">Edit Tags</h2>
-            <p className="truncate text-muted-foreground text-xs">
+            <p className="text-muted-foreground truncate text-xs">
               {image.filename}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-md p-1 transition-colors"
           >
             <XIcon className="size-4" />
           </button>
@@ -130,7 +130,7 @@ export default function EditTagsDialog({
           </FieldWrapper>
 
           {error && (
-            <p className="rounded-lg bg-destructive/10 px-3 py-2 text-destructive text-sm">
+            <p className="bg-destructive/10 text-destructive rounded-lg px-3 py-2 text-sm">
               {error}
             </p>
           )}

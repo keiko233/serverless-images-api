@@ -75,7 +75,7 @@ export default function ImagePreviewDialog({
             e.stopPropagation();
             onNavigate(currentIndex - 1);
           }}
-          className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
+          className="absolute top-1/2 left-4 z-50 -translate-y-1/2 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
         >
           <ChevronLeftIcon className="size-6" />
         </button>
@@ -89,7 +89,7 @@ export default function ImagePreviewDialog({
             e.stopPropagation();
             onNavigate(currentIndex + 1);
           }}
-          className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
+          className="absolute top-1/2 right-4 z-50 -translate-y-1/2 rounded-full bg-white/10 p-2.5 text-white transition-colors hover:bg-white/20"
         >
           <ChevronRightIcon className="size-6" />
         </button>
@@ -97,7 +97,7 @@ export default function ImagePreviewDialog({
 
       {/* Content */}
       <div
-        className="relative z-50 flex max-w-screen-xl w-full flex-col items-center gap-4 px-20"
+        className="relative z-50 flex w-full max-w-screen-xl flex-col items-center gap-4 px-20"
         onClick={(e) => e.stopPropagation()}
       >
         <img
@@ -110,18 +110,18 @@ export default function ImagePreviewDialog({
         {/* Metadata */}
         <div className="flex flex-col items-center gap-1 text-center">
           {image.character && (
-            <p className="text-white font-medium text-sm">{image.character}</p>
+            <p className="text-sm font-medium text-white">{image.character}</p>
           )}
-          <p className="text-white/60 text-sm">{image.filename}</p>
+          <p className="text-sm text-white/60">{image.filename}</p>
           {image.tags && (
-            <p className="text-white/40 text-xs max-w-2xl line-clamp-2">
+            <p className="line-clamp-2 max-w-2xl text-xs text-white/40">
               {image.tags}
             </p>
           )}
         </div>
 
         {/* Counter */}
-        <p className="text-white/30 text-xs">
+        <p className="text-xs text-white/30">
           {currentIndex + 1} / {images.length}
         </p>
       </div>

@@ -17,7 +17,7 @@ function RankRow({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-4 shrink-0 text-right text-[11px] text-muted-foreground">
+      <span className="text-muted-foreground w-4 shrink-0 text-right text-[11px]">
         {rank}
       </span>
 
@@ -27,14 +27,14 @@ function RankRow({
             {label || "—"}
           </span>
 
-          <span className="ml-2 shrink-0 text-xs text-muted-foreground">
+          <span className="text-muted-foreground ml-2 shrink-0 text-xs">
             {count.toLocaleString("en-US")}
           </span>
         </div>
 
-        <div className="h-1 overflow-hidden rounded-full bg-muted">
+        <div className="bg-muted h-1 overflow-hidden rounded-full">
           <div
-            className="h-full rounded-full bg-primary/70 transition-all"
+            className="bg-primary/70 h-full rounded-full transition-all"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -60,7 +60,7 @@ function RankingCard({
 
       <CardPanel>
         {items.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No data yet.</p>
+          <p className="text-muted-foreground text-sm">No data yet.</p>
         ) : (
           <div className="flex flex-col gap-3">
             {items.map((item, i) => (

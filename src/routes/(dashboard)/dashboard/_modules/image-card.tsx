@@ -9,10 +9,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { deleteImageById } from "@/query/images";
-import { updateImageTags } from "@/service/deepdanbooru";
-import type { Image } from "@/schema";
 import { cn } from "@/lib/utils";
+import { deleteImageById } from "@/query/images";
+import type { Image } from "@/schema";
+import { updateImageTags } from "@/service/deepdanbooru";
 
 import EditTagsDialog from "./edit-tags-dialog";
 
@@ -33,7 +33,9 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
   async function handleAutoTag() {
     setAutoTagging(true);
     try {
-      await updateImageTags({ data: { id: image.id, filename: image.filename } });
+      await updateImageTags({
+        data: { id: image.id, filename: image.filename },
+      });
       router.invalidate();
     } catch {
       // silent fail
@@ -62,15 +64,15 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
 
   return (
     <>
-      <div className="group relative overflow-hidden rounded-xl bg-muted aspect-square">
+      <div className="group bg-muted relative aspect-square overflow-hidden rounded-xl">
         {/* Loading skeleton */}
         {!imgLoaded && !imgError && (
-          <div className="absolute inset-0 animate-pulse bg-muted" />
+          <div className="bg-muted absolute inset-0 animate-pulse" />
         )}
 
         {/* Image error state */}
         {imgError && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-muted-foreground">
+          <div className="text-muted-foreground absolute inset-0 flex flex-col items-center justify-center gap-1">
             <ImageIcon className="size-8" />
             <span className="text-xs">Failed to load</span>
           </div>
@@ -94,7 +96,7 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
         )}
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 flex flex-col justify-between p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-gradient-to-t from-black/70 via-black/20 to-black/40">
+        <div className="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/70 via-black/20 to-black/40 p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           {/* Action buttons */}
           <div className="flex justify-end gap-1">
             {!confirmDelete ? (
@@ -128,7 +130,7 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
                   <TooltipTrigger
                     type="button"
                     onClick={() => setConfirmDelete(true)}
-                    className="rounded-md bg-white/15 p-1.5 text-white backdrop-blur-xs transition-colors hover:bg-destructive/80"
+                    className="hover:bg-destructive/80 rounded-md bg-white/15 p-1.5 text-white backdrop-blur-xs transition-colors"
                   >
                     <Trash2Icon className="size-3.5" />
                   </TooltipTrigger>
@@ -137,19 +139,19 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
               </TooltipProvider>
             ) : (
               <div className="flex items-center gap-1.5 rounded-lg bg-black/60 px-2 py-1 backdrop-blur-xs">
-                <span className="text-white text-xs">Delete?</span>
+                <span className="text-xs text-white">Delete?</span>
                 <button
                   type="button"
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="rounded px-2 py-0.5 bg-destructive text-white text-xs font-medium hover:bg-destructive/80 disabled:opacity-60"
+                  className="bg-destructive hover:bg-destructive/80 rounded px-2 py-0.5 text-xs font-medium text-white disabled:opacity-60"
                 >
                   {deleting ? <Spinner className="size-3" /> : "Yes"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setConfirmDelete(false)}
-                  className="rounded px-2 py-0.5 bg-white/20 text-white text-xs font-medium hover:bg-white/30"
+                  className="rounded bg-white/20 px-2 py-0.5 text-xs font-medium text-white hover:bg-white/30"
                 >
                   No
                 </button>
@@ -162,7 +164,7 @@ export default function ImageCard({ image, onPreview }: ImageCardProps) {
             {image.character && (
               <p className="truncate text-xs font-medium">{image.character}</p>
             )}
-            <p className="truncate text-white/70 text-xs">{image.filename}</p>
+            <p className="truncate text-xs text-white/70">{image.filename}</p>
           </div>
         </div>
       </div>

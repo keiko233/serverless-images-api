@@ -129,7 +129,7 @@ export default function RequestLog() {
               <TableRow>
                 <TableCell
                   colSpan={6}
-                  className="py-8 text-center text-muted-foreground"
+                  className="text-muted-foreground py-8 text-center"
                 >
                   No records found.
                 </TableCell>
@@ -161,13 +161,13 @@ export default function RequestLog() {
                   </TableCell>
 
                   <TableCell
-                    className="max-w-[180px] truncate text-xs text-muted-foreground"
+                    className="text-muted-foreground max-w-[180px] truncate text-xs"
                     title={record.userAgent ?? undefined}
                   >
                     {truncate(record.userAgent, 36)}
                   </TableCell>
 
-                  <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
+                  <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
                     {formatDate(record.createdAt)}
                   </TableCell>
                 </TableRow>
@@ -188,7 +188,7 @@ export default function RequestLog() {
             Previous
           </Button>
 
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {pagination.page} / {pagination.totalPages}
           </span>
 

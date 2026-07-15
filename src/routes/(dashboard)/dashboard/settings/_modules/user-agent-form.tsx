@@ -63,7 +63,7 @@ export default function UserAgentForm() {
               <FieldWrapper label="User Agent Strings">
                 <div className="flex flex-col gap-2">
                   {field.state.value.length === 0 && (
-                    <p className="text-muted-foreground text-sm py-1">
+                    <p className="text-muted-foreground py-1 text-sm">
                       No user agents configured.
                     </p>
                   )}

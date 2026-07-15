@@ -4,6 +4,6 @@ allowBuilds:
   sharp: true
   workerd: true
 minimumReleaseAgeExclude:
-  - '@cloudflare/vite-plugin@1.45.0'
+  - "@cloudflare/vite-plugin@1.45.0"
   - miniflare@4.20260710.0
   - wrangler@4.111.0

@@ -99,13 +99,13 @@ export default function CleanupCard() {
               }}
             />
 
-            <span className="text-sm text-muted-foreground">days</span>
+            <span className="text-muted-foreground text-sm">days</span>
           </div>
         </div>
       </CardPanel>
 
       <CardFooter className="flex items-center justify-between gap-3">
-        <span className="text-sm text-muted-foreground">
+        <span className="text-muted-foreground text-sm">
           {result ??
             (activeDays != null
               ? `Will delete records older than ${activeDays} day${activeDays !== 1 ? "s" : ""}.`

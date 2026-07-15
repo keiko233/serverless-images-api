@@ -14,15 +14,15 @@ function StatCard({
   return (
     <Card>
       <CardPanel>
-        <p className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wide uppercase">
           {label}
         </p>
 
-        <p className="text-2xl font-bold leading-none">
+        <p className="text-2xl leading-none font-bold">
           {value.toLocaleString("en-US")}
         </p>
 
-        {sub && <p className="mt-1 text-xs text-muted-foreground">{sub}</p>}
+        {sub && <p className="text-muted-foreground mt-1 text-xs">{sub}</p>}
       </CardPanel>
     </Card>
   );

@@ -9,12 +9,7 @@ import ImageGrid from "./_modules/image-grid";
 const searchSchema = z.object({
   page: z.number().int().min(1).optional().default(1),
   search: z.string().optional().default(""),
-  pageSize: z
-    .number()
-    .int()
-    .min(1)
-    .optional()
-    .default(DEFAULT_CARD_PAGE_SIZE),
+  pageSize: z.number().int().min(1).optional().default(DEFAULT_CARD_PAGE_SIZE),
 });
 
 export const Route = createFileRoute("/(dashboard)/dashboard/")({

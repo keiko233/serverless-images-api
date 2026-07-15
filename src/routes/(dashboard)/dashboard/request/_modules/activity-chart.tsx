@@ -19,7 +19,7 @@ function Chart({ data }: { data: { date: string; count: number }[] }) {
           return (
             <div
               key={d.date}
-              className="flex-1 rounded-t-sm bg-primary/70 transition-all"
+              className="bg-primary/70 flex-1 rounded-t-sm transition-all"
               style={{ height: `${pct}%` }}
               title={`${d.date}: ${d.count} requests`}
             />
@@ -31,7 +31,7 @@ function Chart({ data }: { data: { date: string; count: number }[] }) {
         {data.map((d, i) => (
           <div key={d.date} className="flex-1 text-center">
             {i % 2 === 0 && (
-              <span className="text-[9px] text-muted-foreground">
+              <span className="text-muted-foreground text-[9px]">
                 {d.date.slice(5)}
               </span>
             )}

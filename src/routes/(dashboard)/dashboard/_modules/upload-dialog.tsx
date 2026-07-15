@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { uploadImageFn } from "@/service/upload-image";
 import { cn } from "@/lib/utils";
+import { uploadImageFn } from "@/service/upload-image";
 
 interface UploadDialogProps {
   open: boolean;
@@ -99,13 +99,13 @@ export default function UploadDialog({
         className="fixed inset-0 bg-black/50 backdrop-blur-xs"
         onClick={onClose}
       />
-      <div className="relative z-50 w-full max-w-md overflow-hidden rounded-2xl border bg-background shadow-2xl">
+      <div className="bg-background relative z-50 w-full max-w-md overflow-hidden rounded-2xl border shadow-2xl">
         <div className="flex items-center justify-between border-b px-6 py-4">
           <h2 className="text-lg font-semibold">Upload Image</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            className="text-muted-foreground hover:bg-accent hover:text-foreground rounded-md p-1 transition-colors"
           >
             <XIcon className="size-4" />
           </button>
@@ -127,17 +127,17 @@ export default function UploadDialog({
             onDragLeave={() => setDragOver(false)}
             onDrop={handleDrop}
           >
-            <UploadIcon className="size-8 text-muted-foreground" />
+            <UploadIcon className="text-muted-foreground size-8" />
             {file ? (
               <div>
-                <p className="font-medium text-sm">{file.name}</p>
+                <p className="text-sm font-medium">{file.name}</p>
                 <p className="text-muted-foreground text-xs">
                   {(file.size / 1024).toFixed(1)} KB
                 </p>
               </div>
             ) : (
               <div>
-                <p className="font-medium text-sm">
+                <p className="text-sm font-medium">
                   Click or drag & drop to upload
                 </p>
                 <p className="text-muted-foreground text-xs">
@@ -158,7 +158,7 @@ export default function UploadDialog({
           </div>
 
           {error && (
-            <p className="rounded-lg bg-destructive/10 px-3 py-2 text-destructive text-sm">
+            <p className="bg-destructive/10 text-destructive rounded-lg px-3 py-2 text-sm">
               {error}
             </p>
           )}

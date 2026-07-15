@@ -142,7 +142,7 @@ export default function ImageGrid() {
         </form>
 
         {images.length === 0 ? (
-          <div className="flex h-48 items-center justify-center text-muted-foreground">
+          <div className="text-muted-foreground flex h-48 items-center justify-center">
             No images found.
           </div>
         ) : (
@@ -172,7 +172,7 @@ export default function ImageGrid() {
           <span className="text-muted-foreground text-sm">
             {pagination.page} / {pagination.totalPages || 1}
           </span>
-          <div className="flex items-center rounded-lg border border-input p-0.5">
+          <div className="border-input flex items-center rounded-lg border p-0.5">
             {PAGE_SIZE_OPTIONS.map((size) => (
               <button
                 key={size}
