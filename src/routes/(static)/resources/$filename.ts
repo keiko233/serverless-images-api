@@ -18,15 +18,11 @@ export const Route = createFileRoute("/(static)/resources/$filename")({
           });
         }
 
-        const result = await getFile({
-          data: query,
-        });
+        const result = await getFile(query);
 
         const res = await fetchWithRetry(result);
 
-        const buffer = await res.arrayBuffer();
-
-        return new Response(buffer, {
+        return new Response(res.body, {
           headers: {
             "content-type":
               res.headers.get("content-type") || "image/" + format,

@@ -25,10 +25,8 @@ export const Route = createFileRoute("/(dashboard)/api/image/$id/$filename")({
         }
 
         const result = await getFile({
-          data: {
-            id,
-            filename,
-          },
+          id,
+          filename,
         });
 
         const imageRes = await fetchWithRetry(result);

@@ -71,9 +71,7 @@ export const Route = createFileRoute("/(static)/")({
 
           // return base64 image
           if (method === Method.Base64) {
-            const result = await getFile({
-              data: query,
-            });
+            const result = await getFile(query);
 
             const res = await fetchWithRetry(result);
             const arrayBuffer = await res.arrayBuffer();

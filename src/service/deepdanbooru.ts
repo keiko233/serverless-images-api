@@ -17,7 +17,7 @@ export const updateImageTags = createServerFn({
     }),
   )
   .handler(async ({ data }) => {
-    const result = await getFile({ data });
+    const result = await getFile(data);
 
     const res = await fetchWithRetry(result);
 

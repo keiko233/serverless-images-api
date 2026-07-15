@@ -1,8 +1,6 @@
-import { createServerFn } from "@tanstack/react-start";
-
 import { OnedriveService } from "@/lib/onedrive";
 import { getOnedrivePathSetting, getOnedriveSetting } from "@/query/settings";
-import { ImageSchema } from "@/schema";
+import { type Image } from "@/schema";
 
 let cachedOnedriveClient: OnedriveService | null = null;
 
@@ -40,33 +38,24 @@ export const uploadFile = async (fileBuffer: Buffer, filename: string) => {
   }
 };
 
-export const getFile = createServerFn({
-  method: "GET",
-})
-  .validator(
-    ImageSchema.pick({
-      id: true,
-      filename: true,
-    }),
-  )
-  .handler(async ({ data }) => {
-    const client = await getOnedriveClient();
+export const getFile = async (data: Pick<Image, "id" | "filename">) => {
+  const client = await getOnedriveClient();
 
-    const path = await getOnedrivePathSetting();
+  const path = await getOnedrivePathSetting();
 
-    if (!path) {
-      throw new Error(
-        "Onedrive path settings not found, please configure it first",
-      );
-    }
+  if (!path) {
+    throw new Error(
+      "Onedrive path settings not found, please configure it first",
+    );
+  }
 
-    const [, format] = data.filename.split(".");
+  const [, format] = data.filename.split(".");
 
-    const result = await client.getLink(`${path.value}/${data.id}.${format}`);
+  const result = await client.getLink(`${path.value}/${data.id}.${format}`);
 
-    if (!result) {
-      throw new Error("Failed to get file");
-    }
+  if (!result) {
+    throw new Error("Failed to get file");
+  }
 
-    return result;
-  });
+  return result;
+};
