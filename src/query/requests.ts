@@ -10,7 +10,7 @@ import { GetRequestRecords } from "./schema";
 export const getRequestRecords = createServerFn({
   method: "GET",
 })
-  .inputValidator(GetRequestRecords)
+  .validator(GetRequestRecords)
   .handler(async ({ data }) => {
     const kysely = getKysely();
     const page = Number(data?.page) || 1;
@@ -170,7 +170,7 @@ export const getRequestStats = createServerFn({
 export const deleteOldRequests = createServerFn({
   method: "POST",
 })
-  .inputValidator(z.object({ days: z.number().int().min(1) }))
+  .validator(z.object({ days: z.number().int().min(1) }))
   .handler(async ({ data }) => {
     const kysely = getKysely();
     const cutoff = Date.now() - data.days * 24 * 60 * 60 * 1000;

@@ -6,7 +6,6 @@ import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import viteTsConfigPaths from "vite-tsconfig-paths";
 
 // Absolute path to our ESM shim that replaces the CJS-only
 // use-sync-external-store/shim/with-selector packages.
@@ -39,6 +38,7 @@ const cloudflareClientShim = {
 export default defineConfig({
   clearScreen: false,
   resolve: {
+    tsconfigPaths: true,
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       // @tanstack/react-store@0.8.x imports the CJS-only shim which Vite
@@ -52,10 +52,6 @@ export default defineConfig({
     cloudflareClientShim,
     devtools(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
-    // this is the plugin that enables path aliases
-    viteTsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
     tailwindcss(),
     tanstackStart({
       router: {

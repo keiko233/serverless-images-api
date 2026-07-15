@@ -14,7 +14,7 @@ import {
 export const getImage = createServerFn({
   method: "GET",
 })
-  .inputValidator(
+  .validator(
     z.object({
       character: z.string().nullable().optional(),
     }),
@@ -48,7 +48,7 @@ export const getImage = createServerFn({
 export const getImages = createServerFn({
   method: "GET",
 })
-  .inputValidator(GetImagesSchema)
+  .validator(GetImagesSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
     const page = Number(data?.page) || 1;
@@ -114,7 +114,7 @@ export const getImages = createServerFn({
 export const createImage = createServerFn({
   method: "POST",
 })
-  .inputValidator(CreateImageSchema)
+  .validator(CreateImageSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
@@ -137,7 +137,7 @@ export const createImage = createServerFn({
 export const upsertImage = createServerFn({
   method: "POST",
 })
-  .inputValidator(CreateImageSchema)
+  .validator(CreateImageSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
@@ -169,7 +169,7 @@ export const upsertImage = createServerFn({
 export const updateImageTagsById = createServerFn({
   method: "POST",
 })
-  .inputValidator(UpdateImageTagsByIdSchema)
+  .validator(UpdateImageTagsByIdSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
@@ -188,7 +188,7 @@ export const updateImageTagsById = createServerFn({
 export const deleteImageById = createServerFn({
   method: "POST",
 })
-  .inputValidator(z.string().nonempty())
+  .validator(z.string().nonempty())
   .handler(async ({ data }) => {
     const kysely = getKysely();
 

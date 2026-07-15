@@ -10,7 +10,7 @@ import { getFile } from "./onedrive";
 export const updateImageTags = createServerFn({
   method: "POST",
 })
-  .inputValidator(
+  .validator(
     ImageSchema.pick({
       id: true,
       filename: true,

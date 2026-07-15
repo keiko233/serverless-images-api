@@ -6,7 +6,7 @@ import { upsertImage } from "@/query/images";
 import { uploadFile } from "./onedrive";
 
 export const uploadImageFn = createServerFn({ method: "POST" })
-  .inputValidator(
+  .validator(
     z.object({
       name: z.string().min(1),
       size: z.number(),
@@ -18,8 +18,10 @@ export const uploadImageFn = createServerFn({ method: "POST" })
     const format = dotIndex !== -1 ? data.name.slice(dotIndex + 1) : "jpg";
 
     const { id } = await upsertImage({
-      filename: data.name,
-      size: data.size,
+      data: {
+        filename: data.name,
+        size: data.size,
+      },
     });
 
     const buffer = Buffer.from(data.base64, "base64");

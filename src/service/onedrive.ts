@@ -43,7 +43,7 @@ export const uploadFile = async (fileBuffer: Buffer, filename: string) => {
 export const getFile = createServerFn({
   method: "GET",
 })
-  .inputValidator(
+  .validator(
     ImageSchema.pick({
       id: true,
       filename: true,

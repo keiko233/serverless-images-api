@@ -18,7 +18,7 @@ import {
 export const getOnedriveSetting = createServerFn({
   method: "GET",
 })
-  .inputValidator(
+  .validator(
     z
       .object({
         withRaw: z.boolean().optional().default(false),
@@ -54,7 +54,7 @@ export const getOnedriveSetting = createServerFn({
 export const upsertOnedriveSetting = createServerFn({
   method: "POST",
 })
-  .inputValidator(OnedriveConfigSchema)
+  .validator(OnedriveConfigSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
@@ -99,7 +99,7 @@ export const getOnedrivePathSetting = createServerFn({
 export const upsertOnedrivePathSetting = createServerFn({
   method: "POST",
 })
-  .inputValidator(UpsertOnedrivePathSettingSchema)
+  .validator(UpsertOnedrivePathSettingSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
@@ -151,7 +151,7 @@ export const getLegacyUserAgentSetting = createServerFn({
 export const upsertLegacyUserAgentSetting = createServerFn({
   method: "POST",
 })
-  .inputValidator(UpsertLegacyUserAgentSettingSchema)
+  .validator(UpsertLegacyUserAgentSettingSchema)
   .handler(async ({ data }) => {
     const kysely = getKysely();
 
